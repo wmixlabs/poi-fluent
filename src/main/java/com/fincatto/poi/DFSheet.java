@@ -17,4 +17,14 @@ class DFSheet {
         }
         return new DFRow(row);
     }
+
+    public DFSheet freeze(final int rows, final int cols) {
+        sheet.createFreezePane(rows, cols);
+        return this;
+    }
+
+    public DFSheet unfreeze() {
+        sheet.createFreezePane(0, 0);
+        return this;
+    }
 }
