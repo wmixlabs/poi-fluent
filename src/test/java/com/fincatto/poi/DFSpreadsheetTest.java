@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 class DFSpreadsheetTest {
 
@@ -20,10 +22,11 @@ class DFSpreadsheetTest {
         final DFRow rowII = sheet.withRow();
         rowII.withCell("Teste II").title();
         rowII.withCell("O dia que a terra parou II").bold();
-        rowII.withCell(BigDecimal.TEN);
-        rowII.withCell(BigDecimal.valueOf(50.25));
+        rowII.withCell("Esse e um merge de 3 celulas").withMergedCells(3);
+        rowII.withCell("Esse e um merge de 2 celulas e 2 linhas").withMergedRows(2).withMergedCells(2);
+        rowII.withCell(BigDecimal.valueOf(50.25)).withComment("Comentario teste");
 
-        spreadsheet.toFile("/tmp/planilha.xls");
+        spreadsheet.toFile("/tmp/planilha"+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) +".xls");
     }
 
 //    @Test

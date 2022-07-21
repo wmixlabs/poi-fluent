@@ -1,19 +1,19 @@
 package com.fincatto.poi;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.IndexedColors;
-
-import java.math.BigDecimal;
 
 public class DFCell<T> {
     private T value;
-    private String comentario;
     private DFStyle style;
+    private String comment;
+    private int mergedCells;
+    private int mergedRows;
 
     public DFCell(T value) {
         this.value = value;
         this.style = new DFStyle();
+        this.mergedCells = 0;
+        this.mergedRows = 0;
     }
 
     public DFCell<T> withValue(final T value) {
@@ -49,5 +49,32 @@ public class DFCell<T> {
     public DFCell<T> withBackgroundColor(IndexedColors color) {
         this.style.setBackgroundColor(color);
         return this;
+    }
+
+    public DFCell<T> withComment(String comment){
+        this.comment = comment;
+        return this;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public DFCell<T> withMergedCells(final int size){
+        this.mergedCells = size;
+        return this;
+    }
+
+    public int getMergedCells() {
+        return mergedCells;
+    }
+
+    public DFCell<T> withMergedRows(final int size){
+        this.mergedRows = size;
+        return this;
+    }
+
+    public int getMergedRows() {
+        return mergedRows;
     }
 }

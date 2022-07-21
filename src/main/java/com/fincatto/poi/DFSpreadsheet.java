@@ -1,8 +1,8 @@
 package com.fincatto.poi;
 
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -33,8 +33,9 @@ public class DFSpreadsheet {
             final HSSFSheet sheetCriado = woorkBook.createSheet(sheet.getName());
             for (DFRow row : sheet.getRows()) {
                 final HSSFRow rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
+                int posicaoCelula = 0;
                 for (DFCell cell : row.getCells()) {
-                    final HSSFCell cellCriada = rowCriada.createCell(Math.max(rowCriada.getLastCellNum(), 0));
+                    final HSSFCell cellCriada = rowCriada.createCell(posicaoCelula);
                     cellCriada.setCellStyle(styles.get(cell.getStyle().hashCode()));
                     final Object value = cell.getValue();
                     if (value != null) {
@@ -50,6 +51,17 @@ public class DFSpreadsheet {
                     } else {
                         cellCriada.setCellValue("");
                     }
+                    if (cell.getComment() != null) {
+                        cellCriada.setCellComment(gerarComentario(cellCriada, cell.getComment()));
+                    }
+                    if (cell.getMergedCells() > 0 || cell.getMergedRows() > 0) {
+                        final int rowIndex = cellCriada.getRowIndex();
+                        final int lastRow = cell.getMergedRows() > 0 ? (cellCriada.getRowIndex() + cell.getMergedRows()) - 1 : cellCriada.getRowIndex();
+                        final int columnIndex = cellCriada.getColumnIndex();
+                        final int lastCol = cell.getMergedCells() > 0 ? (cellCriada.getColumnIndex() + cell.getMergedCells()) - 1 : cellCriada.getColumnIndex();
+                        sheetCriado.addMergedRegion(new CellRangeAddress(rowIndex, lastRow, columnIndex, lastCol));
+                    }
+                    posicaoCelula = posicaoCelula + Math.max(cell.getMergedCells() - 1, 0) + 1;
                 }
             }
         }
@@ -81,13 +93,13 @@ public class DFSpreadsheet {
             if (dfStyle.getBorderRigth() != null) {
                 cellStyle.setBorderRight(dfStyle.getBorderRigth());
             }
-            if(dfStyle.getFont() != null || dfStyle.getFontSize() != null || dfStyle.isFontBold()){
+            if (dfStyle.getFont() != null || dfStyle.getFontSize() != null || dfStyle.isFontBold()) {
                 final HSSFFont font = woorkBook.createFont();
                 font.setBold(dfStyle.isFontBold());
-                if(dfStyle.getFont() != null){
+                if (dfStyle.getFont() != null) {
                     font.setFontName(dfStyle.getFont());
                 }
-                if(dfStyle.getFontSize() != null){
+                if (dfStyle.getFontSize() != null) {
                     font.setFontHeightInPoints(dfStyle.getFontSize());
                 }
                 cellStyle.setFont(font);
@@ -114,5 +126,22 @@ public class DFSpreadsheet {
                 return byteArrayOutputStream.toByteArray();
             }
         }
+    }
+
+    private static Comment gerarComentario(final HSSFCell cell, final String comentario) {
+        if (comentario != null && !comentario.isBlank()) {
+            final CreationHelper factory = cell.getRow().getSheet().getWorkbook().getCreationHelper();
+
+            final ClientAnchor anchor = factory.createClientAnchor();
+            anchor.setCol1(cell.getColumnIndex());
+            anchor.setCol2(cell.getColumnIndex() + 3);
+            anchor.setRow1(cell.getRowIndex());
+            anchor.setRow2(cell.getRowIndex() + 4);
+
+            final Comment comment = cell.getSheet().createDrawingPatriarch().createCellComment(anchor);
+            comment.setString(factory.createRichTextString(comentario));
+            return comment;
+        }
+        return null;
     }
 }
