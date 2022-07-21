@@ -3,28 +3,51 @@ package com.fincatto.poi;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class DFSheet {
-    private final Sheet sheet;
 
-    public DFSheet(final Sheet sheet) {
-        this.sheet = sheet;
+    private final String name;
+    private List<DFRow> rows;
+    private Integer freezeCols, freezeRows;
+
+    public DFSheet(final String name) {
+        this.name = name;
+        this.rows = new ArrayList<>();
     }
 
-    public DFRow withRow(final int pos) {
-        Row row = this.sheet.getRow(pos);
-        if (row == null) {
-            row = this.sheet.createRow(pos);
-        }
-        return new DFRow(row);
+    public DFRow withRow(){
+        final DFRow row = new DFRow();
+        this.rows.add(row);
+        return row;
     }
 
-    public DFSheet freeze(final int rows, final int cols) {
-        sheet.createFreezePane(rows, cols);
+    public DFSheet freeze(final int cols, final int rows) {
+        this.freezeCols = cols;
+        this.freezeRows = rows;
         return this;
     }
 
     public DFSheet unfreeze() {
-        sheet.createFreezePane(0, 0);
+        this.freezeCols = null;
+        this.freezeRows = null;
         return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<DFRow> getRows() {
+        return rows;
+    }
+
+    public Integer getFreezeCols() {
+        return freezeCols;
+    }
+
+    public Integer getFreezeRows() {
+        return freezeRows;
     }
 }
