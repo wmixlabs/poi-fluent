@@ -132,7 +132,7 @@ public class DFSpreadsheet {
                 cellStyle.setBorderRight(dfStyle.getBorderRigth());
             }
 
-            if (dfStyle.getFont() != null || dfStyle.getFontSize() != null || dfStyle.isFontBold()) {
+            if (dfStyle.getFont() != null || dfStyle.getFontSize() != null || dfStyle.isFontBold() || dfStyle.getFontColor() != null) {
                 final HSSFFont font = woorkBook.createFont();
                 font.setBold(dfStyle.isFontBold());
                 if (dfStyle.getFont() != null) {
@@ -140,6 +140,9 @@ public class DFSpreadsheet {
                 }
                 if (dfStyle.getFontSize() != null) {
                     font.setFontHeightInPoints(dfStyle.getFontSize());
+                }
+                if (dfStyle.getFontColor() != null) {
+                    font.setColor(dfStyle.getFontColor().getIndex());
                 }
                 cellStyle.setFont(font);
             }

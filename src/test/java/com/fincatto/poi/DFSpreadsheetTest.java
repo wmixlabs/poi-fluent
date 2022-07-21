@@ -1,5 +1,6 @@
 package com.fincatto.poi;
 
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,10 @@ class DFSpreadsheetTest {
         final DFRow row = sheet.withRow();
         row.withCell("Teste").title();
         row.withCell("O dia que a terra parou").bold();
+        row.withCell("Esse campo \u00E9 azul").withBackgroundColor(IndexedColors.BLUE);
+        row.withCell("Essa letra \u00E9 vermelha").withFontColor(IndexedColors.RED);
+        row.withCell("Font Alef").withFontFamily("alef");
+        row.withCell("Font 20").withFontSize((short) 20);
         spreadsheet.toFile("/tmp/planilha_basica"+ LocalDateTime.now().format(FORMATTER) +".xls");
     }
 
@@ -73,7 +78,7 @@ class DFSpreadsheetTest {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
         final DFRow dfRow = sheet.withRow();
-        dfRow.withCell("Este é um texto longo");
+        dfRow.withCell("Este \u00E9 um texto longo");
         dfRow.withCell("Texto");
         sheet.withRow().withCell("curto");
         sheet.withAutoSizeColumns(true);

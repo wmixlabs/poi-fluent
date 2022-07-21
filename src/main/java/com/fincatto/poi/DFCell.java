@@ -48,12 +48,22 @@ public class DFCell<T> {
         return this;
     }
 
-    public DFCell<T> withBackgroundColor(IndexedColors color) {
+    public DFCell<T> withFontColor(final IndexedColors color) {
+        this.style.setFontColor(color);
+        return this;
+    }
+
+    public DFCell<T> withFontSize(final Short size) {
+        this.style.setFontSize(size);
+        return this;
+    }
+
+    public DFCell<T> withBackgroundColor(final IndexedColors color) {
         this.style.setBackgroundColor(color);
         return this;
     }
 
-    public DFCell<T> withComment(String comment){
+    public DFCell<T> withComment(final String comment) {
         this.comment = comment;
         return this;
     }
@@ -62,7 +72,7 @@ public class DFCell<T> {
         return comment;
     }
 
-    public DFCell<T> withMergedCells(final int size){
+    public DFCell<T> withMergedCells(final int size) {
         this.mergedCells = size;
         return this;
     }
@@ -71,7 +81,7 @@ public class DFCell<T> {
         return mergedCells;
     }
 
-    public DFCell<T> withMergedRows(final int size){
+    public DFCell<T> withMergedRows(final int size) {
         this.mergedRows = size;
         return this;
     }
@@ -80,17 +90,17 @@ public class DFCell<T> {
         return mergedRows;
     }
 
-    public DFCell<T> withDataFormat(String dataFormat){
+    public DFCell<T> withDataFormat(final String dataFormat) {
         this.getStyle().setDataFormat(dataFormat);
         return this;
     }
 
-    public DFCell<T> withDataFormat(short dataForatBuiltin){
+    public DFCell<T> withDataFormat(final short dataForatBuiltin) {
         this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
         return this;
     }
 
-    public DFCell<T> withLink(String link){
+    public DFCell<T> withLink(final String link) {
         this.link = link;
         return this;
     }
@@ -99,12 +109,12 @@ public class DFCell<T> {
         return link;
     }
 
-    public DFCell<T> withFormula(String formula){
+    public DFCell<T> withFormula(final String formula) {
         this.formula = formula;
         return this;
     }
 
-    public String getFormula(){
+    public String getFormula() {
         return this.formula;
     }
 }

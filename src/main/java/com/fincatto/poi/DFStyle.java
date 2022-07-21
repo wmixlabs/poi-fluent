@@ -12,7 +12,7 @@ public class DFStyle {
     private String font;
     private Short fontSize;
     private boolean fontBold;
-    private IndexedColors backgroundColor;
+    private IndexedColors backgroundColor, fontColor;
     private Short dataFormatBuiltin;
     private String dataFormat;
 
@@ -124,13 +124,21 @@ public class DFStyle {
         return this;
     }
 
+    public IndexedColors getFontColor() {
+        return fontColor;
+    }
+
+    public DFStyle setFontColor(IndexedColors fontColor) {
+        this.fontColor = fontColor;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DFStyle dfStyle = (DFStyle) o;
-        return fontBold == dfStyle.fontBold && borderBottom == dfStyle.borderBottom && borderTop == dfStyle.borderTop && borderLeft == dfStyle.borderLeft && borderRigth == dfStyle.borderRigth && horizontalAlignment == dfStyle.horizontalAlignment && verticalAlignment == dfStyle.verticalAlignment && Objects.equals(font, dfStyle.font) && Objects.equals(fontSize, dfStyle.fontSize) && backgroundColor == dfStyle.backgroundColor && Objects.equals(dataFormatBuiltin, dfStyle.dataFormatBuiltin) && Objects.equals(dataFormat, dfStyle.dataFormat);
+        return fontBold == dfStyle.fontBold && borderBottom == dfStyle.borderBottom && borderTop == dfStyle.borderTop && borderLeft == dfStyle.borderLeft && borderRigth == dfStyle.borderRigth && horizontalAlignment == dfStyle.horizontalAlignment && verticalAlignment == dfStyle.verticalAlignment && Objects.equals(font, dfStyle.font) && Objects.equals(fontSize, dfStyle.fontSize) && backgroundColor == dfStyle.backgroundColor && fontColor == dfStyle.fontColor && Objects.equals(dataFormatBuiltin, dfStyle.dataFormatBuiltin) && Objects.equals(dataFormat, dfStyle.dataFormat);
     }
 
     @Override
@@ -143,6 +151,7 @@ public class DFStyle {
         final int hashVerticalAlignment = this.verticalAlignment != null ? this.verticalAlignment.hashCode() : 0;
         final int hashFont = this.font != null ? this.font.hashCode() : 0;
         final int hashFontSize = this.fontSize != null ? this.fontSize.hashCode() : 0;
+        final int hashFontColor = this.fontColor != null ? this.fontColor.hashCode() : 0;
         final int hashBackgroundColor = this.backgroundColor != null ? this.backgroundColor.hashCode() : 0;
         final int hashDataFormatBuiltin = this.dataFormatBuiltin != null ? this.dataFormatBuiltin.hashCode() : 0;
         final int hashDataFormat = this.dataFormat != null ? this.dataFormat.hashCode() : 0;
@@ -155,6 +164,7 @@ public class DFStyle {
                 hashVerticalAlignment,
                 hashFont,
                 hashFontSize,
+                hashFontColor,
                 hashBackgroundColor,
                 hashDataFormatBuiltin,
                 hashDataFormat
