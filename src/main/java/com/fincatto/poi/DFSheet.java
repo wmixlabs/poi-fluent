@@ -1,8 +1,5 @@
 package com.fincatto.poi;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +8,7 @@ class DFSheet {
     private final String name;
     private List<DFRow> rows;
     private Integer freezeCols, freezeRows;
+    private boolean autoSizeColumns;
 
     public DFSheet(final String name) {
         this.name = name;
@@ -49,5 +47,14 @@ class DFSheet {
 
     public Integer getFreezeRows() {
         return freezeRows;
+    }
+
+    public DFSheet withAutoSizeColumns(final boolean autoSizeColumns){
+        this.autoSizeColumns = autoSizeColumns;
+        return this;
+    }
+
+    public boolean isAutoSizeColumns() {
+        return autoSizeColumns;
     }
 }

@@ -5,7 +5,9 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 public class DFCell<T> {
     private T value;
     private DFStyle style;
+    private String formula;
     private String comment;
+    private String link;
     private int mergedCells;
     private int mergedRows;
 
@@ -76,5 +78,33 @@ public class DFCell<T> {
 
     public int getMergedRows() {
         return mergedRows;
+    }
+
+    public DFCell<T> withDataFormat(String dataFormat){
+        this.getStyle().setDataFormat(dataFormat);
+        return this;
+    }
+
+    public DFCell<T> withDataFormat(short dataForatBuiltin){
+        this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
+        return this;
+    }
+
+    public DFCell<T> withLink(String link){
+        this.link = link;
+        return this;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public DFCell<T> withFormula(String formula){
+        this.formula = formula;
+        return this;
+    }
+
+    public String getFormula(){
+        return this.formula;
     }
 }
