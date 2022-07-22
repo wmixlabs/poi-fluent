@@ -72,6 +72,8 @@ public class DFSpreadsheet {
                 cellCriada.setCellValue(((LocalDate) value));
             } else if (value instanceof LocalDateTime) {
                 cellCriada.setCellValue(((LocalDateTime) value));
+            } else if (value instanceof Boolean) {
+                cellCriada.setCellValue(((Boolean) value));
             } else {
                 cellCriada.setCellValue(value.toString());
             }

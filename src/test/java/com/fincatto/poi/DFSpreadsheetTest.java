@@ -61,6 +61,8 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell(LocalDateTime.now()).withDataFormat("dd/MM/YYYY hh:mm:ss");
         sheet.withRow().withCell(LocalDateTime.now()).withDataFormat("hh:mm:ss");
         sheet.withRow().withCell(LocalDateTime.now()).withDataFormat((short) 0x16);
+        sheet.withRow().withCell(Boolean.TRUE);
+        sheet.withRow().withCell(Boolean.FALSE);
         spreadsheet.toFile("/tmp/planilha_formatos"+ LocalDateTime.now().format(FORMATTER) +".xls");
     }
 
