@@ -43,13 +43,51 @@ public class DFSpreadsheet {
                 }
             }
 
-            if(sheet.isAutoSizeColumns()) {
+            //Processa agrupamento de linhas
+            agruparLinhas(sheet, sheetCriado);
+
+            if (sheet.isAutoSizeColumns()) {
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
                     sheetCriado.autoSizeColumn(indiceColuna);
                 }
             }
         }
         return woorkBook;
+    }
+
+    private void agruparLinhas(final DFSheet sheet, final HSSFSheet sheetCriado) {
+        Object agrupador = null;
+        List<List<Integer>> agrupamentosTotais = new ArrayList<>();
+        List<Integer> linhasAgrupadasAtual = new ArrayList<>();
+        for (int i = 0; i < sheet.getRows().size(); i++) {
+            final DFRow dfRow = sheet.getRows().get(i);
+            final Object agrupadorLinha = dfRow.getAgrupador();
+            if (agrupador != null && agrupadorLinha != null) {
+                if (Objects.equals(agrupador, agrupadorLinha)) {
+                    linhasAgrupadasAtual.add(i);
+                } else {
+                    agrupador = agrupadorLinha;
+                    agrupamentosTotais.add(linhasAgrupadasAtual);
+                    linhasAgrupadasAtual = new ArrayList<>();
+                    linhasAgrupadasAtual.add(i);
+                }
+            } else if (agrupador == null && agrupadorLinha != null) {
+                agrupador = agrupadorLinha;
+                linhasAgrupadasAtual = new ArrayList<>();
+                linhasAgrupadasAtual.add(i);
+            } else if (agrupador != null && agrupadorLinha == null) {
+                agrupador = null;
+                agrupamentosTotais.add(linhasAgrupadasAtual);
+                linhasAgrupadasAtual = new ArrayList<>();
+            }
+        }
+        if (!linhasAgrupadasAtual.isEmpty()) {
+            agrupamentosTotais.add(linhasAgrupadasAtual);
+        }
+        for (List<Integer> agrupamento : agrupamentosTotais) {
+            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size()-1));
+            sheetCriado.setRowSumsBelow(false);
+        }
     }
 
     private void gerarCelula(final DFCell cell, int posicaoCelula, final HSSFRow row, final HSSFSheet sheet, final Map<Integer, HSSFCellStyle> styles) {
@@ -87,12 +125,12 @@ public class DFSpreadsheet {
         }
 
         //Preencho formula da celula
-        if(cell.getFormula() != null){
+        if (cell.getFormula() != null) {
             cellCriada.setCellFormula(cell.getFormula());
         }
 
         //Crio link na celula
-        if(cell.getLink() != null){
+        if (cell.getLink() != null) {
             final Hyperlink hyperlink = row.getSheet().getWorkbook().getCreationHelper().createHyperlink(HyperlinkType.URL);
             hyperlink.setAddress(cell.getLink());
             cellCriada.setHyperlink(hyperlink);
@@ -149,11 +187,11 @@ public class DFSpreadsheet {
                 cellStyle.setFont(font);
             }
 
-            if(dfStyle.getDataFormatBuiltin() != null){
+            if (dfStyle.getDataFormatBuiltin() != null) {
                 cellStyle.setDataFormat(dfStyle.getDataFormatBuiltin());
             }
 
-            if(dfStyle.getDataFormat() != null){
+            if (dfStyle.getDataFormat() != null) {
                 cellStyle.setDataFormat(woorkBook.createDataFormat().getFormat(dfStyle.getDataFormat()));
             }
 

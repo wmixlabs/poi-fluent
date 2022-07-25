@@ -6,6 +6,7 @@ import java.util.List;
 public class DFRow {
 
     private List<DFCell> cells;
+    private Object agrupador;
 
     public DFRow() {
         this.cells = new ArrayList<>();
@@ -19,5 +20,14 @@ public class DFRow {
 
     public List<DFCell> getCells() {
         return cells;
+    }
+
+    public DFRow withAgrupador(Object agrupador) {
+        this.agrupador = agrupador;
+        return this;
+    }
+
+    public Object getAgrupador() {
+        return agrupador;
     }
 }

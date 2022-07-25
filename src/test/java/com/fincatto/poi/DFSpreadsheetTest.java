@@ -30,6 +30,7 @@ class DFSpreadsheetTest {
     }
 
     @Test
+    @Disabled
     public void testeMerges() throws Exception {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
@@ -48,6 +49,7 @@ class DFSpreadsheetTest {
     }
 
     @Test
+    @Disabled
     public void testeFormatacao() throws Exception {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
@@ -67,6 +69,7 @@ class DFSpreadsheetTest {
     }
 
     @Test
+    @Disabled
     public void testeLink() throws Exception {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
@@ -76,6 +79,7 @@ class DFSpreadsheetTest {
     }
 
     @Test
+    @Disabled
     public void testeAutoSize() throws Exception {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
@@ -88,10 +92,68 @@ class DFSpreadsheetTest {
     }
 
     @Test
+    @Disabled
     public void testeFormula() throws Exception {
         final DFSpreadsheet spreadsheet = new DFSpreadsheet();
         final DFSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("").withFormula("DATE(2020,12,1)");
         spreadsheet.toFile("/tmp/planilha_formula"+ LocalDateTime.now().format(FORMATTER) +".xls");
+    }
+
+    @Test
+    @Disabled
+    public void testeAgrupamento() throws Exception {
+        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
+        final DFSheet sheet = spreadsheet.withSheet("Teste");
+
+        final DFRow dfRow = sheet.withRow().withAgrupador("Agrupador1");
+        dfRow.withCell("Linha 1");
+        dfRow.withCell("Celula 1");
+        dfRow.withCell("Celula 2");
+        dfRow.withCell("Celula 3");
+        dfRow.withCell("Celula 4");
+        dfRow.withCell("Celula 5");
+
+        final DFRow dfRowII = sheet.withRow().withAgrupador("Agrupador1");
+        dfRowII.withCell("Linha 2");
+        dfRowII.withCell("Celula 1");
+        dfRowII.withCell("Celula 2");
+        dfRowII.withCell("Celula 3");
+        dfRowII.withCell("Celula 4");
+        dfRowII.withCell("Celula 5");
+
+        final DFRow dfRowIII = sheet.withRow().withAgrupador("Agrupador1");
+        dfRowIII.withCell("Linha 3");
+        dfRowIII.withCell("Celula 1");
+        dfRowIII.withCell("Celula 2");
+        dfRowIII.withCell("Celula 3");
+        dfRowIII.withCell("Celula 4");
+        dfRowIII.withCell("Celula 5");
+
+        final DFRow dfRowIV = sheet.withRow().withAgrupador("Agrupador2");
+        dfRowIV.withCell("Linha 4");
+        dfRowIV.withCell("Celula 1");
+        dfRowIV.withCell("Celula 2");
+        dfRowIV.withCell("Celula 3");
+        dfRowIV.withCell("Celula 4");
+        dfRowIV.withCell("Celula 5");
+
+        final DFRow dfRowV = sheet.withRow().withAgrupador("Agrupador2");
+        dfRowV.withCell("Linha 5");
+        dfRowV.withCell("Celula 1");
+        dfRowV.withCell("Celula 2");
+        dfRowV.withCell("Celula 3");
+        dfRowV.withCell("Celula 4");
+        dfRowV.withCell("Celula 5");
+
+        final DFRow dfRowVI = sheet.withRow();
+        dfRowVI.withCell("Linha 6");
+        dfRowVI.withCell("Celula 1");
+        dfRowVI.withCell("Celula 2");
+        dfRowVI.withCell("Celula 3");
+        dfRowVI.withCell("Celula 4");
+        dfRowVI.withCell("Celula 5");
+
+        spreadsheet.toFile("/tmp/planilha_agrupamento"+ LocalDateTime.now().format(FORMATTER) +".xls");
     }
 }
