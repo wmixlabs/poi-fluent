@@ -1,4 +1,4 @@
-package com.fincatto.poi;
+package br.com.wmixvideo.poi;
 
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.*;
@@ -14,37 +14,36 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DFSpreadsheet {
+public class WMXSpreadsheet {
 
-    //    private final Workbook workbook;
-    private final List<DFSheet> sheets;
+    private final List<WMXSheet> sheets;
 
-    public DFSpreadsheet() {
+    public WMXSpreadsheet() {
         this.sheets = new ArrayList<>();
     }
 
-    public DFSheet withSheet(String name) {
-        final DFSheet sheet = new DFSheet(name);
+    public WMXSheet withSheet(String name) {
+        final WMXSheet sheet = new WMXSheet(name);
         this.sheets.add(sheet);
         return sheet;
     }
 
     private Workbook build() {
         final HSSFWorkbook woorkBook = new HSSFWorkbook();
-        final Map<Integer, HSSFCellStyle> styles = gerarStyles(woorkBook);
-        for (DFSheet sheet : this.sheets) {
+        final Map<Integer, HSSFCellStyle> styles = buildGenerateStyles(woorkBook);
+        for (WMXSheet sheet : this.sheets) {
             final HSSFSheet sheetCriado = woorkBook.createSheet(sheet.getName());
-            for (DFRow row : sheet.getRows()) {
+            for (WMXRow row : sheet.getRows()) {
                 final HSSFRow rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
-                for (DFCell cell : row.getCells()) {
-                    gerarCelula(cell, posicaoCelula, rowCriada, sheetCriado, styles);
+                for (WMXCell cell : row.getCells()) {
+                    buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
                 }
             }
 
             //Processa agrupamento de linhas
-            agruparLinhas(sheet, sheetCriado);
+            buildGenerateGroupLines(sheet, sheetCriado);
 
             if (sheet.isAutoSizeColumns()) {
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
@@ -55,13 +54,13 @@ public class DFSpreadsheet {
         return woorkBook;
     }
 
-    private void agruparLinhas(final DFSheet sheet, final HSSFSheet sheetCriado) {
-        Object agrupador = null;
+    private void buildGenerateGroupLines(final WMXSheet sheet, final HSSFSheet sheetCriado) {
+        String agrupador = null;
         List<List<Integer>> agrupamentosTotais = new ArrayList<>();
         List<Integer> linhasAgrupadasAtual = new ArrayList<>();
         for (int i = 0; i < sheet.getRows().size(); i++) {
-            final DFRow dfRow = sheet.getRows().get(i);
-            final Object agrupadorLinha = dfRow.getAgrupador();
+            final WMXRow dfRow = sheet.getRows().get(i);
+            final String agrupadorLinha = dfRow.getGroup();
             if (agrupador != null && agrupadorLinha != null) {
                 if (Objects.equals(agrupador, agrupadorLinha)) {
                     linhasAgrupadasAtual.add(i);
@@ -90,7 +89,7 @@ public class DFSpreadsheet {
         }
     }
 
-    private void gerarCelula(final DFCell cell, int posicaoCelula, final HSSFRow row, final HSSFSheet sheet, final Map<Integer, HSSFCellStyle> styles) {
+    private void buildGenerateCell(final WMXCell cell, int posicaoCelula, final HSSFRow row, final HSSFSheet sheet, final Map<Integer, HSSFCellStyle> styles) {
         //Crio celula
         final HSSFCell cellCriada = row.createCell(posicaoCelula);
 
@@ -121,7 +120,7 @@ public class DFSpreadsheet {
 
         //Crio comentario na celula
         if (cell.getComment() != null) {
-            cellCriada.setCellComment(gerarComentario(cellCriada, cell.getComment()));
+            cellCriada.setCellComment(buildGenerateComments(cellCriada, cell.getComment()));
         }
 
         //Preencho formula da celula
@@ -146,10 +145,10 @@ public class DFSpreadsheet {
         }
     }
 
-    private Map<Integer, HSSFCellStyle> gerarStyles(HSSFWorkbook woorkBook) {
-        final Set<DFStyle> styles = this.sheets.stream().map(s -> s.getRows()).flatMap(List::stream).map(r -> r.getCells()).flatMap(List::stream).map(c -> c.getStyle()).distinct().collect(Collectors.toSet());
+    private Map<Integer, HSSFCellStyle> buildGenerateStyles(HSSFWorkbook woorkBook) {
+        final Set<WMXStyle> styles = this.sheets.stream().map(s -> s.getRows()).flatMap(List::stream).map(r -> r.getCells()).flatMap(List::stream).map(c -> c.getStyle()).distinct().collect(Collectors.toSet());
         final Map<Integer, HSSFCellStyle> stylesCriados = new HashMap<>(styles.size());
-        for (DFStyle dfStyle : styles) {
+        for (WMXStyle dfStyle : styles) {
             final HSSFCellStyle cellStyle = woorkBook.createCellStyle();
             if (dfStyle.getBackgroundColor() != null) {
                 cellStyle.setFillForegroundColor(dfStyle.getBackgroundColor().getIndex());
@@ -202,6 +201,23 @@ public class DFSpreadsheet {
 
     }
 
+    private static Comment buildGenerateComments(final HSSFCell cell, final String comentario) {
+        if (comentario != null && !comentario.isBlank()) {
+            final CreationHelper factory = cell.getRow().getSheet().getWorkbook().getCreationHelper();
+
+            final ClientAnchor anchor = factory.createClientAnchor();
+            anchor.setCol1(cell.getColumnIndex());
+            anchor.setCol2(cell.getColumnIndex() + 3);
+            anchor.setRow1(cell.getRowIndex());
+            anchor.setRow2(cell.getRowIndex() + 4);
+
+            final Comment comment = cell.getSheet().createDrawingPatriarch().createCellComment(anchor);
+            comment.setString(factory.createRichTextString(comentario));
+            return comment;
+        }
+        return null;
+    }
+
     public void toFile(final String path) throws IOException {
         try (FileOutputStream outputStream = new FileOutputStream(path)) {
             try (Workbook workbook = build()) {
@@ -217,22 +233,5 @@ public class DFSpreadsheet {
                 return byteArrayOutputStream.toByteArray();
             }
         }
-    }
-
-    private static Comment gerarComentario(final HSSFCell cell, final String comentario) {
-        if (comentario != null && !comentario.isBlank()) {
-            final CreationHelper factory = cell.getRow().getSheet().getWorkbook().getCreationHelper();
-
-            final ClientAnchor anchor = factory.createClientAnchor();
-            anchor.setCol1(cell.getColumnIndex());
-            anchor.setCol2(cell.getColumnIndex() + 3);
-            anchor.setRow1(cell.getRowIndex());
-            anchor.setRow2(cell.getRowIndex() + 4);
-
-            final Comment comment = cell.getSheet().createDrawingPatriarch().createCellComment(anchor);
-            comment.setString(factory.createRichTextString(comentario));
-            return comment;
-        }
-        return null;
     }
 }

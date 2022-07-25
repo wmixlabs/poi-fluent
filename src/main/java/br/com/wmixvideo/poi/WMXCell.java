@@ -1,23 +1,24 @@
-package com.fincatto.poi;
+package br.com.wmixvideo.poi;
 
 import org.apache.poi.ss.usermodel.IndexedColors;
 
-public class DFCell<T> {
+public class WMXCell<T> {
+
     private T value;
-    private final DFStyle style;
+    private final WMXStyle style;
     private String formula;
     private String comment;
     private String link;
     private int mergedColumns, mergedRows;
 
-    public DFCell(T value) {
+    public WMXCell(T value) {
         this.value = value;
-        this.style = new DFStyle();
+        this.style = new WMXStyle();
         this.mergedColumns = 0;
         this.mergedRows = 0;
     }
 
-    public DFCell<T> withValue(final T value) {
+    public WMXCell<T> withValue(final T value) {
         this.value = value;
         return this;
     }
@@ -26,42 +27,42 @@ public class DFCell<T> {
         return value;
     }
 
-    public DFStyle getStyle() {
+    public WMXStyle getStyle() {
         return style;
     }
 
-    public DFCell<T> title() {
+    public WMXCell<T> title() {
         this.style.setFontBold(true);
         this.style.setBackgroundColor(IndexedColors.GREY_25_PERCENT);
         return this;
     }
 
-    public DFCell<T> bold() {
+    public WMXCell<T> bold() {
         this.style.setFontBold(true);
         return this;
     }
 
-    public DFCell<T> withFontFamily(final String fontFamily) {
+    public WMXCell<T> withFontFamily(final String fontFamily) {
         this.style.setFont(fontFamily);
         return this;
     }
 
-    public DFCell<T> withFontColor(final IndexedColors color) {
+    public WMXCell<T> withFontColor(final IndexedColors color) {
         this.style.setFontColor(color);
         return this;
     }
 
-    public DFCell<T> withFontSize(final Short size) {
+    public WMXCell<T> withFontSize(final Short size) {
         this.style.setFontSize(size);
         return this;
     }
 
-    public DFCell<T> withBackgroundColor(final IndexedColors color) {
+    public WMXCell<T> withBackgroundColor(final IndexedColors color) {
         this.style.setBackgroundColor(color);
         return this;
     }
 
-    public DFCell<T> withComment(final String comment) {
+    public WMXCell<T> withComment(final String comment) {
         this.comment = comment;
         return this;
     }
@@ -70,7 +71,7 @@ public class DFCell<T> {
         return comment;
     }
 
-    public DFCell<T> withMergedCells(final int size) {
+    public WMXCell<T> withMergedCells(final int size) {
         this.mergedColumns = size;
         return this;
     }
@@ -79,7 +80,7 @@ public class DFCell<T> {
         return mergedColumns;
     }
 
-    public DFCell<T> withMergedRows(final int size) {
+    public WMXCell<T> withMergedRows(final int size) {
         this.mergedRows = size;
         return this;
     }
@@ -88,17 +89,17 @@ public class DFCell<T> {
         return mergedRows;
     }
 
-    public DFCell<T> withDataFormat(final String dataFormat) {
+    public WMXCell<T> withDataFormat(final String dataFormat) {
         this.getStyle().setDataFormat(dataFormat);
         return this;
     }
 
-    public DFCell<T> withDataFormat(final short dataForatBuiltin) {
+    public WMXCell<T> withDataFormat(final short dataForatBuiltin) {
         this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
         return this;
     }
 
-    public DFCell<T> withLink(final String link) {
+    public WMXCell<T> withLink(final String link) {
         this.link = link;
         return this;
     }
@@ -107,7 +108,7 @@ public class DFCell<T> {
         return link;
     }
 
-    public DFCell<T> withFormula(final String formula) {
+    public WMXCell<T> withFormula(final String formula) {
         this.formula = formula;
         return this;
     }

@@ -1,4 +1,4 @@
-package com.fincatto.poi;
+package br.com.wmixvideo.poi;
 
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Disabled;
@@ -16,34 +16,34 @@ class DFSpreadsheetTest {
     @Test
     @Disabled
     public void testeBasico() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
 
-        final DFRow row = sheet.withRow();
+        final WMXRow row = sheet.withRow();
         row.withCell("Teste").title();
         row.withCell("O dia que a terra parou").bold();
         row.withCell("Esse campo \u00E9 azul").withBackgroundColor(IndexedColors.BLUE);
         row.withCell("Essa letra \u00E9 vermelha").withFontColor(IndexedColors.RED);
         row.withCell("Font Alef").withFontFamily("alef");
         row.withCell("Font 20").withFontSize((short) 20);
-        spreadsheet.toFile("/tmp/planilha_basica"+ LocalDateTime.now().format(FORMATTER) +".xls");
+        spreadsheet.toFile("/tmp/planilha_basica" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
 
     @Test
     @Disabled
     public void testeMerges() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
-        final DFRow row = sheet.withRow();
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXRow row = sheet.withRow();
         row.withCell("Teste II").title();
         row.withCell("O dia que a terra parou II").bold();
         row.withCell("Esse e um merge de 3 celulas").withMergedCells(3);
         row.withCell("Esse e um merge de 2 celulas e 2 linhas").withMergedRows(2).withMergedCells(2);
         row.withCell(BigDecimal.valueOf(50.25)).withComment("Comentario teste");
-        final DFRow rowIII = sheet.withRow();
+        final WMXRow rowIII = sheet.withRow();
         rowIII.withCell("Teste III").title();
         for (int i = 0; i < 10; i++) {
-            rowIII.withCell("Celula "+i);
+            rowIII.withCell("Celula " + i);
         }
         spreadsheet.toFile("/tmp/planilha_merges"+ LocalDateTime.now().format(FORMATTER) +".xls");
     }
@@ -51,8 +51,8 @@ class DFSpreadsheetTest {
     @Test
     @Disabled
     public void testeFormatacao() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell(BigDecimal.TEN);
         sheet.withRow().withCell(BigDecimal.valueOf(120.25)).withDataFormat("#,##0.00");
         sheet.withRow().withCell(BigDecimal.valueOf(210.950)).withDataFormat((short) 5);
@@ -71,42 +71,42 @@ class DFSpreadsheetTest {
     @Test
     @Disabled
     public void testeLink() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("Filme");
         sheet.withRow().withCell("tt0899128").withLink("https://www.imdb.com/title/tt0899128/?ref_=nv_sr_srsg_0");
-        spreadsheet.toFile("/tmp/planilha_link"+ LocalDateTime.now().format(FORMATTER) +".xls");
+        spreadsheet.toFile("/tmp/planilha_link" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
 
     @Test
     @Disabled
     public void testeAutoSize() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
-        final DFRow dfRow = sheet.withRow();
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXRow dfRow = sheet.withRow();
         dfRow.withCell("Este \u00E9 um texto longo");
         dfRow.withCell("Texto");
         sheet.withRow().withCell("curto");
         sheet.withAutoSizeColumns(true);
-        spreadsheet.toFile("/tmp/planilha_autosize"+ LocalDateTime.now().format(FORMATTER) +".xls");
+        spreadsheet.toFile("/tmp/planilha_autosize" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
 
     @Test
     @Disabled
     public void testeFormula() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("").withFormula("DATE(2020,12,1)");
-        spreadsheet.toFile("/tmp/planilha_formula"+ LocalDateTime.now().format(FORMATTER) +".xls");
+        spreadsheet.toFile("/tmp/planilha_formula" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
 
     @Test
     @Disabled
     public void testeAgrupamento() throws Exception {
-        final DFSpreadsheet spreadsheet = new DFSpreadsheet();
-        final DFSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
 
-        final DFRow dfRow = sheet.withRow().withAgrupador("Agrupador1");
+        final WMXRow dfRow = sheet.withRow().withGroup("Agrupador1");
         dfRow.withCell("Linha 1");
         dfRow.withCell("Celula 1");
         dfRow.withCell("Celula 2");
@@ -114,7 +114,7 @@ class DFSpreadsheetTest {
         dfRow.withCell("Celula 4");
         dfRow.withCell("Celula 5");
 
-        final DFRow dfRowII = sheet.withRow().withAgrupador("Agrupador1");
+        final WMXRow dfRowII = sheet.withRow().withGroup("Agrupador1");
         dfRowII.withCell("Linha 2");
         dfRowII.withCell("Celula 1");
         dfRowII.withCell("Celula 2");
@@ -122,7 +122,7 @@ class DFSpreadsheetTest {
         dfRowII.withCell("Celula 4");
         dfRowII.withCell("Celula 5");
 
-        final DFRow dfRowIII = sheet.withRow().withAgrupador("Agrupador1");
+        final WMXRow dfRowIII = sheet.withRow().withGroup("Agrupador1");
         dfRowIII.withCell("Linha 3");
         dfRowIII.withCell("Celula 1");
         dfRowIII.withCell("Celula 2");
@@ -130,7 +130,7 @@ class DFSpreadsheetTest {
         dfRowIII.withCell("Celula 4");
         dfRowIII.withCell("Celula 5");
 
-        final DFRow dfRowIV = sheet.withRow().withAgrupador("Agrupador2");
+        final WMXRow dfRowIV = sheet.withRow().withGroup("Agrupador2");
         dfRowIV.withCell("Linha 4");
         dfRowIV.withCell("Celula 1");
         dfRowIV.withCell("Celula 2");
@@ -138,7 +138,7 @@ class DFSpreadsheetTest {
         dfRowIV.withCell("Celula 4");
         dfRowIV.withCell("Celula 5");
 
-        final DFRow dfRowV = sheet.withRow().withAgrupador("Agrupador2");
+        final WMXRow dfRowV = sheet.withRow().withGroup("Agrupador2");
         dfRowV.withCell("Linha 5");
         dfRowV.withCell("Celula 1");
         dfRowV.withCell("Celula 2");
@@ -146,7 +146,7 @@ class DFSpreadsheetTest {
         dfRowV.withCell("Celula 4");
         dfRowV.withCell("Celula 5");
 
-        final DFRow dfRowVI = sheet.withRow();
+        final WMXRow dfRowVI = sheet.withRow();
         dfRowVI.withCell("Linha 6");
         dfRowVI.withCell("Celula 1");
         dfRowVI.withCell("Celula 2");

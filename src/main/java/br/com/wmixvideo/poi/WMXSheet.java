@@ -1,33 +1,33 @@
-package com.fincatto.poi;
+package br.com.wmixvideo.poi;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class DFSheet {
+class WMXSheet {
 
     private final String name;
-    private List<DFRow> rows;
+    private final List<WMXRow> rows;
     private Integer freezeCols, freezeRows;
     private boolean autoSizeColumns;
 
-    public DFSheet(final String name) {
+    public WMXSheet(final String name) {
         this.name = name;
         this.rows = new ArrayList<>();
     }
 
-    public DFRow withRow(){
-        final DFRow row = new DFRow();
+    public WMXRow withRow() {
+        final WMXRow row = new WMXRow();
         this.rows.add(row);
         return row;
     }
 
-    public DFSheet freeze(final int cols, final int rows) {
+    public WMXSheet freeze(final int cols, final int rows) {
         this.freezeCols = cols;
         this.freezeRows = rows;
         return this;
     }
 
-    public DFSheet unfreeze() {
+    public WMXSheet unfreeze() {
         this.freezeCols = null;
         this.freezeRows = null;
         return this;
@@ -37,7 +37,7 @@ class DFSheet {
         return name;
     }
 
-    public List<DFRow> getRows() {
+    public List<WMXRow> getRows() {
         return rows;
     }
 
@@ -49,7 +49,7 @@ class DFSheet {
         return freezeRows;
     }
 
-    public DFSheet withAutoSizeColumns(final boolean autoSizeColumns){
+    public WMXSheet withAutoSizeColumns(final boolean autoSizeColumns) {
         this.autoSizeColumns = autoSizeColumns;
         return this;
     }

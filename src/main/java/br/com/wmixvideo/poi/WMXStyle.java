@@ -1,10 +1,13 @@
-package com.fincatto.poi;
+package br.com.wmixvideo.poi;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import java.util.Objects;
 
-public class DFStyle {
+public class WMXStyle {
 
     private BorderStyle borderBottom, borderTop, borderLeft, borderRigth;
     private HorizontalAlignment horizontalAlignment;
@@ -20,7 +23,7 @@ public class DFStyle {
         return borderBottom;
     }
 
-    public DFStyle setBorderBottom(BorderStyle borderBottom) {
+    public WMXStyle setBorderBottom(BorderStyle borderBottom) {
         this.borderBottom = borderBottom;
         return this;
     }
@@ -29,7 +32,7 @@ public class DFStyle {
         return borderTop;
     }
 
-    public DFStyle setBorderTop(BorderStyle borderTop) {
+    public WMXStyle setBorderTop(BorderStyle borderTop) {
         this.borderTop = borderTop;
         return this;
     }
@@ -38,7 +41,7 @@ public class DFStyle {
         return borderLeft;
     }
 
-    public DFStyle setBorderLeft(BorderStyle borderLeft) {
+    public WMXStyle setBorderLeft(BorderStyle borderLeft) {
         this.borderLeft = borderLeft;
         return this;
     }
@@ -47,7 +50,7 @@ public class DFStyle {
         return borderRigth;
     }
 
-    public DFStyle setBorderRigth(BorderStyle borderRigth) {
+    public WMXStyle setBorderRigth(BorderStyle borderRigth) {
         this.borderRigth = borderRigth;
         return this;
     }
@@ -56,7 +59,7 @@ public class DFStyle {
         return horizontalAlignment;
     }
 
-    public DFStyle setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
+    public WMXStyle setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
         this.horizontalAlignment = horizontalAlignment;
         return this;
     }
@@ -65,7 +68,7 @@ public class DFStyle {
         return verticalAlignment;
     }
 
-    public DFStyle setVerticalAlignment(VerticalAlignment verticalAlignment) {
+    public WMXStyle setVerticalAlignment(VerticalAlignment verticalAlignment) {
         this.verticalAlignment = verticalAlignment;
         return this;
     }
@@ -74,7 +77,7 @@ public class DFStyle {
         return font;
     }
 
-    public DFStyle setFont(String font) {
+    public WMXStyle setFont(String font) {
         this.font = font;
         return this;
     }
@@ -83,7 +86,7 @@ public class DFStyle {
         return fontSize;
     }
 
-    public DFStyle setFontSize(Short fontSize) {
+    public WMXStyle setFontSize(Short fontSize) {
         this.fontSize = fontSize;
         return this;
     }
@@ -92,7 +95,7 @@ public class DFStyle {
         return fontBold;
     }
 
-    public DFStyle setFontBold(boolean fontBold) {
+    public WMXStyle setFontBold(boolean fontBold) {
         this.fontBold = fontBold;
         return this;
     }
@@ -101,7 +104,7 @@ public class DFStyle {
         return backgroundColor;
     }
 
-    public DFStyle setBackgroundColor(IndexedColors backgroundColor) {
+    public WMXStyle setBackgroundColor(IndexedColors backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }
@@ -110,7 +113,7 @@ public class DFStyle {
         return dataFormatBuiltin;
     }
 
-    public DFStyle setDataFormatBuiltin(Short dataFormatBuiltin) {
+    public WMXStyle setDataFormatBuiltin(Short dataFormatBuiltin) {
         this.dataFormatBuiltin = dataFormatBuiltin;
         return this;
     }
@@ -119,7 +122,7 @@ public class DFStyle {
         return dataFormat;
     }
 
-    public DFStyle setDataFormat(String dataFormat) {
+    public WMXStyle setDataFormat(String dataFormat) {
         this.dataFormat = dataFormat;
         return this;
     }
@@ -128,7 +131,7 @@ public class DFStyle {
         return fontColor;
     }
 
-    public DFStyle setFontColor(IndexedColors fontColor) {
+    public WMXStyle setFontColor(IndexedColors fontColor) {
         this.fontColor = fontColor;
         return this;
     }
@@ -137,7 +140,7 @@ public class DFStyle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DFStyle dfStyle = (DFStyle) o;
+        WMXStyle dfStyle = (WMXStyle) o;
         return fontBold == dfStyle.fontBold && borderBottom == dfStyle.borderBottom && borderTop == dfStyle.borderTop && borderLeft == dfStyle.borderLeft && borderRigth == dfStyle.borderRigth && horizontalAlignment == dfStyle.horizontalAlignment && verticalAlignment == dfStyle.verticalAlignment && Objects.equals(font, dfStyle.font) && Objects.equals(fontSize, dfStyle.fontSize) && backgroundColor == dfStyle.backgroundColor && fontColor == dfStyle.fontColor && Objects.equals(dataFormatBuiltin, dfStyle.dataFormatBuiltin) && Objects.equals(dataFormat, dfStyle.dataFormat);
     }
 
