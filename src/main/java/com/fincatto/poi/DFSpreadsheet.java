@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class DFSpreadsheet {
 
     //    private final Workbook workbook;
-    private List<DFSheet> sheets;
+    private final List<DFSheet> sheets;
 
     public DFSpreadsheet() {
         this.sheets = new ArrayList<>();
@@ -39,7 +39,7 @@ public class DFSpreadsheet {
                 int posicaoCelula = 0;
                 for (DFCell cell : row.getCells()) {
                     gerarCelula(cell, posicaoCelula, rowCriada, sheetCriado, styles);
-                    posicaoCelula = posicaoCelula + Math.max(cell.getMergedCells() - 1, 0) + 1;
+                    posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
                 }
             }
 
@@ -99,11 +99,11 @@ public class DFSpreadsheet {
         }
 
         //Crio regiao com merge
-        if (cell.getMergedCells() > 0 || cell.getMergedRows() > 0) {
+        if (cell.getMergedColumns() > 0 || cell.getMergedRows() > 0) {
             final int rowIndex = cellCriada.getRowIndex();
             final int lastRow = cell.getMergedRows() > 0 ? (cellCriada.getRowIndex() + cell.getMergedRows()) - 1 : cellCriada.getRowIndex();
             final int columnIndex = cellCriada.getColumnIndex();
-            final int lastCol = cell.getMergedCells() > 0 ? (cellCriada.getColumnIndex() + cell.getMergedCells()) - 1 : cellCriada.getColumnIndex();
+            final int lastCol = cell.getMergedColumns() > 0 ? (cellCriada.getColumnIndex() + cell.getMergedColumns()) - 1 : cellCriada.getColumnIndex();
             sheet.addMergedRegion(new CellRangeAddress(rowIndex, lastRow, columnIndex, lastCol));
         }
     }

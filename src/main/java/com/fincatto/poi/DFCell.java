@@ -4,17 +4,16 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 
 public class DFCell<T> {
     private T value;
-    private DFStyle style;
+    private final DFStyle style;
     private String formula;
     private String comment;
     private String link;
-    private int mergedCells;
-    private int mergedRows;
+    private int mergedColumns, mergedRows;
 
     public DFCell(T value) {
         this.value = value;
         this.style = new DFStyle();
-        this.mergedCells = 0;
+        this.mergedColumns = 0;
         this.mergedRows = 0;
     }
 
@@ -26,7 +25,6 @@ public class DFCell<T> {
     public T getValue() {
         return value;
     }
-
 
     public DFStyle getStyle() {
         return style;
@@ -73,12 +71,12 @@ public class DFCell<T> {
     }
 
     public DFCell<T> withMergedCells(final int size) {
-        this.mergedCells = size;
+        this.mergedColumns = size;
         return this;
     }
 
-    public int getMergedCells() {
-        return mergedCells;
+    public int getMergedColumns() {
+        return mergedColumns;
     }
 
     public DFCell<T> withMergedRows(final int size) {
