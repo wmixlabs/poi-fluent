@@ -6,16 +6,12 @@ public class WMXCell<T> {
 
     private T value;
     private final WMXStyle style;
-    private String formula;
-    private String comment;
-    private String link;
+    private String formula, comment, link;
     private int mergedColumns, mergedRows;
 
     public WMXCell(T value) {
         this.value = value;
         this.style = new WMXStyle();
-        this.mergedColumns = 0;
-        this.mergedRows = 0;
     }
 
     public WMXCell<T> withValue(final T value) {
