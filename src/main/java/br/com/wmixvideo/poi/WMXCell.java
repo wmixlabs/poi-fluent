@@ -69,7 +69,7 @@ public class WMXCell<T> {
         return comment;
     }
 
-    public WMXCell<T> withMergedCells(final int size) {
+    public WMXCell<T> withMergedColumns(final int size) {
         this.mergedColumns = size;
         return this;
     }
@@ -96,14 +96,17 @@ public class WMXCell<T> {
         this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
         return this;
     }
-    public WMXCell<T> withBorderTop(final BorderStyle borderTop){
+
+    public WMXCell<T> withBorderTop(final BorderStyle borderTop) {
         this.getStyle().setBorderTop(borderTop);
         return this;
     }
-    public WMXCell<T> withHorizontalAligment(final HorizontalAlignment horizontalAlignment){
+
+    public WMXCell<T> withHorizontalAligment(final HorizontalAlignment horizontalAlignment) {
         this.getStyle().setHorizontalAlignment(horizontalAlignment);
         return this;
     }
+
     public WMXCell<T> withLink(final String link) {
         this.link = link;
         return this;
