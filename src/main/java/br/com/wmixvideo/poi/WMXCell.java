@@ -40,6 +40,11 @@ public class WMXCell<T> {
         return this;
     }
 
+    public WMXCell<T> currency() {
+        this.getStyle().setDataFormat("#,##0.00");
+        return this;
+    }
+
     public WMXCell<T> withFontFamily(final String fontFamily) {
         this.style.setFont(fontFamily);
         return this;
@@ -94,11 +99,6 @@ public class WMXCell<T> {
 
     public WMXCell<T> withDataFormat(final short dataForatBuiltin) {
         this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
-        return this;
-    }
-
-    public WMXCell<T> withDataFormatDecimal2Digits() {
-        this.getStyle().setDataFormat("#,##0.00");
         return this;
     }
 

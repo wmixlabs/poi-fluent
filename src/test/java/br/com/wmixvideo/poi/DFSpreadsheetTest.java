@@ -559,19 +559,19 @@ class DFSpreadsheetTest {
             row.withCell(String.valueOf(i));
             row.withCell(String.valueOf(i % 2));
             row.withCell("Fulano da Silva " + i).withLink("http://gremio.net");
-            row.withCell(BigDecimal.valueOf(i * 1000)).withDataFormatDecimal2Digits();
-            row.withCell(BigDecimal.valueOf(i * 1000 * 0.9)).withDataFormatDecimal2Digits();
+            row.withCell(BigDecimal.valueOf(i * 1000)).currency();
+            row.withCell(BigDecimal.valueOf(i * 1000 * 0.9 * -1)).currency();
         }
 
         final WMXRow rowSubTotal = sheet.withRow();//.footer();.bold()
         rowSubTotal.withCell("Subtotal").withMergedColumns(3).withBorderTop().bold();
-        rowSubTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUBTOTAL(109,D4:D12)").withBorderTop().bold();
-        rowSubTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUBTOTAL(109,E4:E12)").withBorderTop().bold();
+        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,D4:D12)").withBorderTop().bold();
+        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,E4:E12)").withBorderTop().bold();
 
         final WMXRow rowGrandTotal = sheet.withRow();//.footer();
         rowGrandTotal.withCell("Grand total").withMergedColumns(3).withBorderTop().bold();
-        rowGrandTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUM(109,D4:D12)").withBorderTop().bold();
-        rowGrandTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUM(109,E4:E12)").withBorderTop().bold();
+        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,D4:D12)").withBorderTop().bold();
+        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,E4:E12)").withBorderTop().bold();
 
         spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
