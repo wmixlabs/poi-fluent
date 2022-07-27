@@ -7,7 +7,7 @@ class WMXSheet {
 
     private final String name;
     private final List<WMXRow> rows;
-    private Integer freezeCols, freezeRows;
+    private int freezeCols, freezeRows;
     private boolean autoSizeColumns;
 
     public WMXSheet(final String name) {
@@ -28,8 +28,8 @@ class WMXSheet {
     }
 
     public WMXSheet unfreeze() {
-        this.freezeCols = null;
-        this.freezeRows = null;
+        this.freezeCols = 0;
+        this.freezeRows = 0;
         return this;
     }
 
@@ -41,11 +41,11 @@ class WMXSheet {
         return rows;
     }
 
-    public Integer getFreezeCols() {
+    public int getFreezeCols() {
         return freezeCols;
     }
 
-    public Integer getFreezeRows() {
+    public int getFreezeRows() {
         return freezeRows;
     }
 
