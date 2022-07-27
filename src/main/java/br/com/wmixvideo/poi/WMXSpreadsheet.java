@@ -43,7 +43,7 @@ public class WMXSpreadsheet {
                 }
             }
 
-            sheetCriado.createFreezePane(sheet.getFreezeCols(), sheet.getFreezeCols());
+            sheetCriado.createFreezePane(sheet.getFreezeCols(), sheet.getFreezeRows());
 
             //Processa agrupamento de linhas
             buildGenerateGroupLines(sheet, sheetCriado);

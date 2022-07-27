@@ -517,7 +517,7 @@ class DFSpreadsheetTest {
         total.withCell("").withFormula("SUBTOTAL(109,H4:H37)").bold().withBorderTop(BorderStyle.THIN);
         total.withCell("").withFormula("SUBTOTAL(109,I4:I37)").bold().withBorderTop(BorderStyle.THIN);
 
-        sheet.freeze(3,9);
+        sheet.freeze(2,3);
         sheet.withAutoSizeColumns(true);
 
         spreadsheet.toFile("/tmp/planilha_modelo_" + LocalDateTime.now().format(FORMATTER) + ".xls");
