@@ -1,5 +1,7 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 public class WMXCell<T> {
@@ -94,7 +96,14 @@ public class WMXCell<T> {
         this.getStyle().setDataFormatBuiltin(dataForatBuiltin);
         return this;
     }
-
+    public WMXCell<T> withBorderTop(final BorderStyle borderTop){
+        this.getStyle().setBorderTop(borderTop);
+        return this;
+    }
+    public WMXCell<T> withHorizontalAligment(final HorizontalAlignment horizontalAlignment){
+        this.getStyle().setHorizontalAlignment(horizontalAlignment);
+        return this;
+    }
     public WMXCell<T> withLink(final String link) {
         this.link = link;
         return this;

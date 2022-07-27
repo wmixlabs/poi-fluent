@@ -46,11 +46,11 @@ public class WMXStyle {
         return this;
     }
 
-    public BorderStyle getBorderRigth() {
+    public BorderStyle getBorderRight() {
         return borderRigth;
     }
 
-    public WMXStyle setBorderRigth(BorderStyle borderRigth) {
+    public WMXStyle setBorderRight(BorderStyle borderRigth) {
         this.borderRigth = borderRigth;
         return this;
     }
