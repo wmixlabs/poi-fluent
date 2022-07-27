@@ -1,6 +1,5 @@
 package br.com.wmixvideo.poi;
 
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Disabled;
@@ -532,39 +531,47 @@ class DFSpreadsheetTest {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Diego");
-        sheet.freeze(3, 2);
+        sheet.freeze(3, 3).withAutoSizeColumns(true);
+
+        final WMXRow rowHeader = sheet.withRow();//.title();
+        rowHeader.withCell("Titulo do relatório".toUpperCase())
+                .withHorizontalAligment(HorizontalAlignment.CENTER)
+                .withBackgroundColor(IndexedColors.GREY_80_PERCENT)
+                .withFontColor(IndexedColors.WHITE)
+                .withMergedColumns(5)
+                .bold();
 
         final WMXRow rowTitle = sheet.withRow();//.title();
-        rowTitle.withCell("ID").withMergedRows(2);
-        rowTitle.withCell("Cls").withMergedRows(2);
-        rowTitle.withCell("Name").withMergedRows(2);
-        rowTitle.withCell("Ammount").withMergedColumns(2);
+        rowTitle.withCell("ID").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        rowTitle.withCell("Cls").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        rowTitle.withCell("Name").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        rowTitle.withCell("Ammount").withMergedColumns(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
 
         final WMXRow rowSubtitle = sheet.withRow();//.subtitle();
-        rowSubtitle.withCell("ID");
-        rowSubtitle.withCell("Cls");
-        rowSubtitle.withCell("Name");
-        rowSubtitle.withCell("Gross");
-        rowSubtitle.withCell("Net");
+        rowSubtitle.withCell("ID").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        rowSubtitle.withCell("Cls").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        rowSubtitle.withCell("Name").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        rowSubtitle.withCell("Gross").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT);
+        rowSubtitle.withCell("Net").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT);
 
         for (int i = 1; i < 10; i++) {
             final WMXRow row = sheet.withRow();
             row.withCell(String.valueOf(i));
             row.withCell(String.valueOf(i % 2));
-            row.withCell("Fulano da Silva " + i);
-            row.withCell(BigDecimal.valueOf(i * 1000));
-            row.withCell(BigDecimal.valueOf(i * 1000 * 0.9));
+            row.withCell("Fulano da Silva " + i).withLink("http://gremio.net");
+            row.withCell(BigDecimal.valueOf(i * 1000)).withDataFormatDecimal2Digits();
+            row.withCell(BigDecimal.valueOf(i * 1000 * 0.9)).withDataFormatDecimal2Digits();
         }
 
-        final WMXRow rowSubTotal = sheet.withRow();//.footer();
-        rowSubTotal.withCell("Subtotal").withMergedColumns(3);
-        rowSubTotal.withCell("").withFormula("SUBTOTAL(109,D3:D11)");
-        rowSubTotal.withCell("").withFormula("SUBTOTAL(109,E3:E11)");
+        final WMXRow rowSubTotal = sheet.withRow();//.footer();.bold()
+        rowSubTotal.withCell("Subtotal").withMergedColumns(3).withBorderTop().bold();
+        rowSubTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUBTOTAL(109,D4:D12)").withBorderTop().bold();
+        rowSubTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUBTOTAL(109,E4:E12)").withBorderTop().bold();
 
         final WMXRow rowGrandTotal = sheet.withRow();//.footer();
-        rowGrandTotal.withCell("Grand total").withMergedColumns(3);
-        rowGrandTotal.withCell("").withFormula("SUM(109,D3:D11)");
-        rowGrandTotal.withCell("").withFormula("SUM(109,E3:E11)");
+        rowGrandTotal.withCell("Grand total").withMergedColumns(3).withBorderTop().bold();
+        rowGrandTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUM(109,D4:D12)").withBorderTop().bold();
+        rowGrandTotal.withCell("").withDataFormatDecimal2Digits().withFormula("SUM(109,E4:E12)").withBorderTop().bold();
 
         spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }

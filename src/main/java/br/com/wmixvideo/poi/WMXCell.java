@@ -97,6 +97,11 @@ public class WMXCell<T> {
         return this;
     }
 
+    public WMXCell<T> withDataFormatDecimal2Digits() {
+        this.getStyle().setDataFormat("#,##0.00");
+        return this;
+    }
+
     public WMXCell<T> withBorder() {
         return this.withBorderTop().withBorderBottom().withBorderLeft().withBorderRight();
     }
