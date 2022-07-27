@@ -511,14 +511,14 @@ class DFSpreadsheetTest {
         dfRowXXXIV.withCell("");
 
         final WMXRow total = sheet.withRow().withGroup("Total");
-        total.withCell("Total").bold().withMergedColumns(2).withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,C4:C37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,D4:D37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,E4:E37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,F4:F37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,G4:G37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,H4:H37)").bold().withBorderTop(BorderStyle.THIN);
-        total.withCell("").withFormula("SUBTOTAL(109,I4:I37)").bold().withBorderTop(BorderStyle.THIN);
+        total.withCell("Total").bold().withMergedColumns(2).withBorder();
+        total.withCell("").withFormula("SUBTOTAL(109,C4:C37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,D4:D37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,E4:E37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,F4:F37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,G4:G37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,H4:H37)").bold().withBorderTop();
+        total.withCell("").withFormula("SUBTOTAL(109,I4:I37)").bold().withBorderTop();
 
         sheet.freeze(2, 3);
         sheet.withAutoSizeColumns(true);

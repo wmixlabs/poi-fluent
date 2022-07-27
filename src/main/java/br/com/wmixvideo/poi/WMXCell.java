@@ -97,8 +97,43 @@ public class WMXCell<T> {
         return this;
     }
 
-    public WMXCell<T> withBorderTop(final BorderStyle borderTop) {
-        this.getStyle().setBorderTop(borderTop);
+    public WMXCell<T> withBorder() {
+        return this.withBorderTop().withBorderBottom().withBorderLeft().withBorderRight();
+    }
+
+    public WMXCell<T> withBorderTop() {
+        return this.withBorderTop(BorderStyle.THIN);
+    }
+
+    public WMXCell<T> withBorderTop(final BorderStyle style) {
+        this.getStyle().setBorderTop(style);
+        return this;
+    }
+
+    public WMXCell<T> withBorderBottom() {
+        return this.withBorderBottom(BorderStyle.THIN);
+    }
+
+    public WMXCell<T> withBorderBottom(final BorderStyle style) {
+        this.getStyle().setBorderBottom(style);
+        return this;
+    }
+
+    public WMXCell<T> withBorderLeft() {
+        return this.withBorderLeft(BorderStyle.THIN);
+    }
+
+    public WMXCell<T> withBorderLeft(final BorderStyle style) {
+        this.getStyle().setBorderLeft(style);
+        return this;
+    }
+
+    public WMXCell<T> withBorderRight() {
+        return this.withBorderRight(BorderStyle.THIN);
+    }
+
+    public WMXCell<T> withBorderRight(final BorderStyle style) {
+        this.getStyle().setBorderRight(style);
         return this;
     }
 
