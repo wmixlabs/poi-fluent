@@ -3,6 +3,7 @@ package br.com.wmixvideo.poi;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 
@@ -30,10 +31,10 @@ public class WMXSpreadsheet {
     }
 
     private Workbook build() {
-        final HSSFWorkbook woorkBook = new HSSFWorkbook();
-        final Map<Integer, HSSFCellStyle> styles = buildGenerateStyles(woorkBook);
+        final HSSFWorkbook workBook = new HSSFWorkbook();
+        final Map<Integer, HSSFCellStyle> styles = buildGenerateStyles(workBook);
         for (WMXSheet sheet : this.sheets) {
-            final HSSFSheet sheetCriado = woorkBook.createSheet(sheet.getName());
+            final HSSFSheet sheetCriado = workBook.createSheet(sheet.getName());
             for (WMXRow row : sheet.getRows()) {
                 final HSSFRow rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
@@ -54,7 +55,7 @@ public class WMXSpreadsheet {
                 }
             }
         }
-        return woorkBook;
+        return workBook;
     }
 
     private void buildGenerateGroupLines(final WMXSheet sheet, final HSSFSheet sheetCriado) {
@@ -87,7 +88,7 @@ public class WMXSpreadsheet {
             agrupamentosTotais.add(linhasAgrupadasAtual);
         }
         for (List<Integer> agrupamento : agrupamentosTotais) {
-            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size()-1));
+            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size() - 1));
             sheetCriado.setRowSumsBelow(false);
         }
     }
@@ -98,7 +99,6 @@ public class WMXSpreadsheet {
 
         //Formato celula
         cellCriada.setCellStyle(styles.get(cell.getStyle().hashCode()));
-
         //Preencho valor da celula
         final Object value = cell.getValue();
         if (value != null) {
@@ -120,6 +120,19 @@ public class WMXSpreadsheet {
         } else {
             cellCriada.setCellValue("");
         }
+
+//        for(int i = 0; i< cellCriada.getColumnIndex(); i++ ){
+//            for(int j = 0; j< sheet.getLastRowNum(); j++){
+//                final CellAddress cellAddress = new CellAddress(j, i);
+//                final Row rowFormula = sheet.getRow(cellAddress.getRow());
+//                final Cell cellFormula = rowFormula.getCell(cellAddress.getColumn());
+//                if(cellFormula != null) {
+//                    if (cellFormula.getCellType() == CellType.NUMERIC) {
+//
+//                    }
+//                }
+//            }
+//        }
 
         //Crio comentario na celula
         if (cell.getComment() != null) {
@@ -148,19 +161,19 @@ public class WMXSpreadsheet {
             final CellRangeAddress region = new CellRangeAddress(rowIndex, lastRow, columnIndex, lastCol);
             sheet.addMergedRegion(region);
 
-            if(cell.getStyle().getBorderTop() != null ){
+            if (cell.getStyle().getBorderTop() != null) {
                 RegionUtil.setBorderTop(cell.getStyle().getBorderTop(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderBottom() != null ) {
+            if (cell.getStyle().getBorderBottom() != null) {
                 RegionUtil.setBorderBottom(cell.getStyle().getBorderBottom(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderLeft() != null ) {
+            if (cell.getStyle().getBorderLeft() != null) {
                 RegionUtil.setBorderLeft(cell.getStyle().getBorderLeft(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderRight() != null ) {
+            if (cell.getStyle().getBorderRight() != null) {
                 RegionUtil.setBorderRight(cell.getStyle().getBorderRight(), region, sheet);
             }
         }
@@ -172,7 +185,7 @@ public class WMXSpreadsheet {
         for (WMXStyle dfStyle : styles) {
             final HSSFCellStyle cellStyle = woorkBook.createCellStyle();
 
-            if(dfStyle.getHorizontalAlignment() != null ){
+            if (dfStyle.getHorizontalAlignment() != null) {
                 cellStyle.setAlignment(dfStyle.getHorizontalAlignment());
             }
 
