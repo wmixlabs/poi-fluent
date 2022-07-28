@@ -3,7 +3,7 @@ package br.com.wmixvideo.poi;
 import java.util.ArrayList;
 import java.util.List;
 
-class WMXSheet {
+public class WMXSheet {
 
     private final String name;
     private final List<WMXRow> rows;
