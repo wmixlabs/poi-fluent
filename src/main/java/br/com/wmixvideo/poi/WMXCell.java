@@ -29,10 +29,21 @@ public class WMXCell<T> {
         return style;
     }
 
+
+    public WMXCell<T> header() {
+        return this.withHorizontalAligment(HorizontalAlignment.CENTER).withBackgroundColor(IndexedColors.GREY_80_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+    }
+
     public WMXCell<T> title() {
-        this.style.setFontBold(true);
-        this.style.setBackgroundColor(IndexedColors.GREY_25_PERCENT);
-        return this;
+        return this.withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+    }
+
+    public WMXCell<T> subtitle() {
+        return this.withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+    }
+
+    public WMXCell<T> totalizer() {
+        return this.withBorderTop().bold();
     }
 
     public WMXCell<T> bold() {
