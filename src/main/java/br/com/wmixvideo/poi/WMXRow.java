@@ -1,7 +1,5 @@
 package br.com.wmixvideo.poi;
 
-import org.apache.poi.ss.usermodel.BorderStyle;
-
 import java.util.ArrayList;
 import java.util.List;
 
