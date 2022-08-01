@@ -569,25 +569,20 @@ class DFSpreadsheetTest {
         sheet.freeze(3, 3).withAutoSizeColumns(true);
 
         final WMXRow rowHeader = sheet.withRow();//.title();
-        rowHeader.withCell("Titulo do relatório".toUpperCase())
-                .withHorizontalAligment(HorizontalAlignment.CENTER)
-                .withBackgroundColor(IndexedColors.GREY_80_PERCENT)
-                .withFontColor(IndexedColors.WHITE)
-                .withMergedColumns(5)
-                .bold();
+        rowHeader.withCell("Titulo do relatório".toUpperCase()).header().withMergedColumns(5);
 
         final WMXRow rowTitle = sheet.withRow();//.title();
-        rowTitle.withCell("ID").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
-        rowTitle.withCell("Cls").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
-        rowTitle.withCell("Name").withMergedRows(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
-        rowTitle.withCell("Ammount").withMergedColumns(2).withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        rowTitle.withCell("ID").title().withMergedRows(2);
+        rowTitle.withCell("Cls").title().withMergedRows(2);
+        rowTitle.withCell("Name").title().withMergedRows(2);
+        rowTitle.withCell("Ammount").title().withMergedColumns(2);
 
         final WMXRow rowSubtitle = sheet.withRow();//.subtitle();
-        rowSubtitle.withCell("ID").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
-        rowSubtitle.withCell("Cls").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
-        rowSubtitle.withCell("Name").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
-        rowSubtitle.withCell("Gross").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT);
-        rowSubtitle.withCell("Net").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT);
+        rowSubtitle.withCell("ID").subtitle();
+        rowSubtitle.withCell("Cls").subtitle();
+        rowSubtitle.withCell("Name").subtitle();
+        rowSubtitle.withCell("Gross").subtitle().withHorizontalAligment(HorizontalAlignment.RIGHT);
+        rowSubtitle.withCell("Net").subtitle().withHorizontalAligment(HorizontalAlignment.RIGHT);
 
         for (int i = 1; i < 10; i++) {
             final WMXRow row = sheet.withRow();
@@ -600,13 +595,13 @@ class DFSpreadsheetTest {
 
         final WMXRow rowSubTotal = sheet.withRow();//.footer();.bold()
         rowSubTotal.withCell("Subtotal").withMergedColumns(3).withBorderTop().bold();
-        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,D4:D12)").withBorderTop().bold();
-        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,E4:E12)").withBorderTop().bold();
+        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,D4:D12)").totalizer();
+        rowSubTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUBTOTAL(109,E4:E12)").totalizer();
 
         final WMXRow rowGrandTotal = sheet.withRow();//.footer();
         rowGrandTotal.withCell("Grand total").withMergedColumns(3).withBorderTop().bold();
-        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,D4:D12)").withBorderTop().bold();
-        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,E4:E12)").withBorderTop().bold();
+        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,D4:D12)").totalizer();
+        rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,E4:E12)").totalizer();
 
         spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
