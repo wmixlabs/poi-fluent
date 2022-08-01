@@ -1,6 +1,7 @@
 package br.com.wmixvideo.poi;
 
 import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
@@ -29,13 +30,13 @@ public class WMXSpreadsheet {
         return sheet;
     }
 
-    private Workbook build() {
-        final XSSFWorkbook woorkBook = new XSSFWorkbook();
-        final Map<Integer, XSSFCellStyle> styles = buildGenerateStyles(woorkBook);
+    private Workbook build(WMXFormat format) {
+        final Workbook woorkBook = WMXFormat.XLS.equals(format) ? new HSSFWorkbook() : new XSSFWorkbook();
+        final Map<Integer, CellStyle> styles = buildGenerateStyles(woorkBook);
         for (WMXSheet sheet : this.sheets) {
-            final XSSFSheet sheetCriado = woorkBook.createSheet(sheet.getName());
+            final Sheet sheetCriado = woorkBook.createSheet(sheet.getName());
             for (WMXRow row : sheet.getRows()) {
-                final XSSFRow rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
+                final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
                 for (WMXCell cell : row.getCells()) {
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
@@ -57,7 +58,7 @@ public class WMXSpreadsheet {
         return woorkBook;
     }
 
-    private void buildGenerateGroupLines(final WMXSheet sheet, final XSSFSheet sheetCriado) {
+    private void buildGenerateGroupLines(final WMXSheet sheet, final Sheet sheetCriado) {
         String agrupador = null;
         List<List<Integer>> agrupamentosTotais = new ArrayList<>();
         List<Integer> linhasAgrupadasAtual = new ArrayList<>();
@@ -92,9 +93,9 @@ public class WMXSpreadsheet {
         }
     }
 
-    private void buildGenerateCell(final WMXCell cell, int posicaoCelula, final XSSFRow row, final XSSFSheet sheet, final Map<Integer, XSSFCellStyle> styles) {
+    private void buildGenerateCell(final WMXCell cell, int posicaoCelula, final Row row, final Sheet sheet, final Map<Integer, CellStyle> styles) {
         //Crio celula
-        final XSSFCell cellCriada = row.createCell(posicaoCelula);
+        final Cell cellCriada = row.createCell(posicaoCelula);
 
         //Formato celula
         cellCriada.setCellStyle(styles.get(cell.getStyle().hashCode()));
@@ -166,11 +167,11 @@ public class WMXSpreadsheet {
         }
     }
 
-    private Map<Integer, XSSFCellStyle> buildGenerateStyles(XSSFWorkbook woorkBook) {
+    private Map<Integer, CellStyle> buildGenerateStyles(Workbook woorkBook) {
         final Set<WMXStyle> styles = this.sheets.stream().map(WMXSheet::getRows).flatMap(List::stream).map(WMXRow::getCells).flatMap(List::stream).map(WMXCell::getStyle).collect(Collectors.toSet());
-        final Map<Integer, XSSFCellStyle> stylesCriados = new HashMap<>(styles.size());
+        final Map<Integer, CellStyle> stylesCriados = new HashMap<>(styles.size());
         for (WMXStyle dfStyle : styles) {
-            final XSSFCellStyle cellStyle = woorkBook.createCellStyle();
+            final CellStyle cellStyle = woorkBook.createCellStyle();
 
             if(dfStyle.getHorizontalAlignment() != null ){
                 cellStyle.setAlignment(dfStyle.getHorizontalAlignment());
@@ -181,8 +182,8 @@ public class WMXSpreadsheet {
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
-            if (dfStyle.getCustomBackgroundColor() != null) {
-                cellStyle.setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), woorkBook.getStylesSource().getIndexedColors()));
+            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof XSSFWorkbook) {
+                ((XSSFCellStyle)cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((XSSFWorkbook)woorkBook).getStylesSource().getIndexedColors()));
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
@@ -203,7 +204,7 @@ public class WMXSpreadsheet {
             }
 
             if (dfStyle.getFont() != null || dfStyle.getFontSize() != null || dfStyle.isFontBold() || dfStyle.getFontColor() != null || dfStyle.getCustomFontColor() != null) {
-                final XSSFFont font = woorkBook.createFont();
+                final Font font = woorkBook.createFont();
                 font.setBold(dfStyle.isFontBold());
                 if (dfStyle.getFont() != null) {
                     font.setFontName(dfStyle.getFont());
@@ -214,8 +215,8 @@ public class WMXSpreadsheet {
                 if (dfStyle.getFontColor() != null) {
                     font.setColor(dfStyle.getFontColor().getIndex());
                 }
-                if (dfStyle.getCustomFontColor() != null) {
-                    font.setColor(new XSSFColor(dfStyle.getCustomFontColor(), woorkBook.getStylesSource().getIndexedColors()));
+                if (dfStyle.getCustomFontColor() != null && woorkBook instanceof XSSFWorkbook) {
+                    ((XSSFFont)font).setColor(new XSSFColor(dfStyle.getCustomFontColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
                 }
                 cellStyle.setFont(font);
             }
@@ -235,7 +236,7 @@ public class WMXSpreadsheet {
 
     }
 
-    private static Comment buildGenerateComments(final XSSFCell cell, final String comentario) {
+    private static Comment buildGenerateComments(final Cell cell, final String comentario) {
         if (comentario != null && !comentario.isBlank()) {
             final CreationHelper factory = cell.getRow().getSheet().getWorkbook().getCreationHelper();
 
@@ -253,16 +254,24 @@ public class WMXSpreadsheet {
     }
 
     public void toFile(final String path) throws IOException {
+        toFile(WMXFormat.XLS, path);
+    }
+
+    public void toFile(final WMXFormat format, final String path) throws IOException {
         try (FileOutputStream outputStream = new FileOutputStream(path)) {
-            try (Workbook workbook = build()) {
+            try (Workbook workbook = build(format)) {
                 workbook.write(outputStream);
             }
         }
     }
 
     public byte[] toByteArray() throws IOException {
+        return toByteArray(WMXFormat.XLS);
+    }
+
+    public byte[] toByteArray(final WMXFormat format) throws IOException {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            try (Workbook workbook = build()) {
+            try (Workbook workbook = build(format)) {
                 workbook.write(byteArrayOutputStream);
                 return byteArrayOutputStream.toByteArray();
             }

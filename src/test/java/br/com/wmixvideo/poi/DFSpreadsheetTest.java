@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -159,6 +160,66 @@ class DFSpreadsheetTest {
         dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.SKY_BLUE);
 
         spreadsheet.toFile("/tmp/planilha_agrupamento_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+    }
+
+    @Test
+    @Disabled
+    public void testeCoresPersonalizadas() throws Exception {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+
+        final WMXRow dfRow = sheet.withRow().withGroup("Agrupador1");
+        dfRow.withCell("Linha 1 agrupada").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        dfRow.withCell("Celula 1").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        dfRow.withCell("Celula 2").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        dfRow.withCell("Celula 3").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        dfRow.withCell("Celula 4").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        dfRow.withCell("Celula 5").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+
+        final WMXRow dfRowII = sheet.withRow().withGroup("Agrupador1");
+        dfRowII.withCell("Linha 2 agrupada");
+        dfRowII.withCell("Celula 1");
+        dfRowII.withCell("Celula 2");
+        dfRowII.withCell("Celula 3");
+        dfRowII.withCell("Celula 4");
+        dfRowII.withCell("Celula 5");
+
+        final WMXRow dfRowIII = sheet.withRow().withGroup("Agrupador1");
+        dfRowIII.withCell("Linha 3 agrupada");
+        dfRowIII.withCell("Celula 1");
+        dfRowIII.withCell("Celula 2");
+        dfRowIII.withCell("Celula 3");
+        dfRowIII.withCell("Celula 4");
+        dfRowIII.withCell("Celula 5");
+
+        final WMXRow dfRowIV = sheet.withRow().withGroup("Agrupador2");
+        dfRowIV.withCell("Linha 4 agrupada").withBackgroundColor(IndexedColors.GREY_50_PERCENT);
+        dfRowIV.withCell("Celula 1").withBackgroundColor(new Color(0xFF7373));
+        dfRowIV.withCell("Celula 2").withBackgroundColor(new Color(0x419000));
+        dfRowIV.withCell("Celula 3").withBackgroundColor(new Color(0xF3F2B1));
+        dfRowIV.withCell("Celula 4").withBackgroundColor(new Color(0xC740F6));
+        dfRowIV.withCell("Celula 5").withBackgroundColor(new Color(0xBABAFF));
+
+        final WMXRow dfRowV = sheet.withRow().withGroup("Agrupador2");
+        dfRowV.withCell("Linha 5 agrupada");
+        dfRowV.withCell("Celula 1");
+        dfRowV.withCell("Celula 2");
+        dfRowV.withCell("Celula 3");
+        dfRowV.withCell("Celula 4");
+        dfRowV.withCell("Celula 5");
+
+        final WMXRow dfRowVI = sheet.withRow();
+        dfRowVI.withCell("Linha 6 desagrupada");
+        dfRowVI.withCell("Celula 1").withBackgroundColor(IndexedColors.BLUE);
+        dfRowVI.withCell("Celula 2").withBackgroundColor(IndexedColors.LIGHT_BLUE);
+        dfRowVI.withCell("Celula 3").withBackgroundColor(IndexedColors.BLUE1);
+        dfRowVI.withCell("Celula 4").withBackgroundColor(IndexedColors.CORNFLOWER_BLUE);
+        dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE);
+        dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.PALE_BLUE);
+        dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.ROYAL_BLUE);
+        dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.SKY_BLUE);
+
+        spreadsheet.toFile(WMXFormat.XLSX, "/tmp/planilha_cores_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
