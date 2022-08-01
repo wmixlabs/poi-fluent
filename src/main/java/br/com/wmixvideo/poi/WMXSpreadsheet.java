@@ -3,7 +3,6 @@ package br.com.wmixvideo.poi;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 
@@ -191,6 +190,11 @@ public class WMXSpreadsheet {
 
             if (dfStyle.getBackgroundColor() != null) {
                 cellStyle.setFillForegroundColor(dfStyle.getBackgroundColor().getIndex());
+                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            }
+
+            if(dfStyle.getBackgroundColorHSSF() != null ){
+                cellStyle.setFillForegroundColor(dfStyle.getBackgroundColorHSSF().getIndex());
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 

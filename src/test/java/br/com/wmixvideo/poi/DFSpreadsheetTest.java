@@ -1,5 +1,6 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Disabled;
@@ -500,7 +501,7 @@ class DFSpreadsheetTest {
         final WMXRow dfRowXXXI = sheet.withRow().withGroup("Item 31");
         dfRowXXXI.withCell("01.07.02");
         dfRowXXXI.withCell("Fiscaliza\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#");
-        dfRowXXXI.withCell("Teste Observa\u00E7\u00E3o");
+        dfRowXXXI.withCell("Teste Observa\u00E7\u00E3o").withFontColor(IndexedColors.DARK_RED);
         dfRowXXXI.withCell(BigDecimal.valueOf(11960.00)).withDataFormat("#,###.00");
         dfRowXXXI.withCell("");
         dfRowXXXI.withCell("");
@@ -512,7 +513,7 @@ class DFSpreadsheetTest {
         final WMXRow dfRowXXXII = sheet.withRow().withGroup("Item 32");
         dfRowXXXII.withCell("01.07.03");
         dfRowXXXII.withCell("Honor\u00E1rios").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#");
-        dfRowXXXII.withCell("Teste Observa\u00E7\u00E3o");
+        dfRowXXXII.withCell("Teste Observa\u00E7\u00E3o").withFontColor(IndexedColors.DARK_GREEN).withBackgroundColor(IndexedColors.BRIGHT_GREEN1);
         dfRowXXXII.withCell("");
         dfRowXXXII.withCell("");
         dfRowXXXII.withCell("");
@@ -524,7 +525,7 @@ class DFSpreadsheetTest {
         final WMXRow dfRowXXXIII = sheet.withRow().withGroup("Item 33");
         dfRowXXXIII.withCell("01.07.04");
         dfRowXXXIII.withCell("Seguro").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#");
-        dfRowXXXIII.withCell("Teste Observa\u00E7\u00E3o");
+        dfRowXXXIII.withCell("Teste Observa\u00E7\u00E3o").withFontColor(IndexedColors.DARK_YELLOW).withBackgroundColorHSSF(HSSFColor.HSSFColorPredefined.valueOf("ecdcdc").getColor());
         dfRowXXXIII.withCell(BigDecimal.valueOf(1458.25));
         dfRowXXXIII.withCell("");
         dfRowXXXIII.withCell("");

@@ -1,5 +1,6 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -16,6 +17,7 @@ public class WMXStyle {
     private Short fontSize;
     private boolean fontBold;
     private IndexedColors backgroundColor, fontColor;
+    private HSSFColor backgroundColorXSSF;
     private Short dataFormatBuiltin;
     private String dataFormat;
 
@@ -106,6 +108,15 @@ public class WMXStyle {
 
     public WMXStyle setBackgroundColor(IndexedColors backgroundColor) {
         this.backgroundColor = backgroundColor;
+        return this;
+    }
+
+    public HSSFColor getBackgroundColorHSSF() {
+        return backgroundColorXSSF;
+    }
+
+    public WMXStyle setBackgroundColorHSSF(HSSFColor backgroundColorHSSF) {
+        this.backgroundColorXSSF = backgroundColorHSSF;
         return this;
     }
 

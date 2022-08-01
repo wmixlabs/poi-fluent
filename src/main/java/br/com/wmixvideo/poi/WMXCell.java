@@ -1,5 +1,6 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -73,6 +74,11 @@ public class WMXCell<T> {
 
     public WMXCell<T> withBackgroundColor(final IndexedColors color) {
         this.style.setBackgroundColor(color);
+        return this;
+    }
+
+    public WMXCell<T> withBackgroundColorHSSF(final HSSFColor color) {
+        this.style.setBackgroundColorHSSF(color);
         return this;
     }
 
