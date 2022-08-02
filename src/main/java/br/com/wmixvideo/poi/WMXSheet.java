@@ -6,17 +6,19 @@ import java.util.List;
 public class WMXSheet {
 
     private final String name;
+    private final WMXSpreadsheet parent;
     private final List<WMXRow> rows;
     private int freezeCols, freezeRows;
     private boolean autoSizeColumns;
 
-    public WMXSheet(final String name) {
+    public WMXSheet(final String name, final WMXSpreadsheet parent) {
         this.name = name;
+        this.parent = parent;
         this.rows = new ArrayList<>();
     }
 
     public WMXRow withRow() {
-        final WMXRow row = new WMXRow();
+        final WMXRow row = new WMXRow(this);
         this.rows.add(row);
         return row;
     }
@@ -56,5 +58,9 @@ public class WMXSheet {
 
     public boolean isAutoSizeColumns() {
         return autoSizeColumns;
+    }
+
+    public WMXSpreadsheet and() {
+        return parent;
     }
 }

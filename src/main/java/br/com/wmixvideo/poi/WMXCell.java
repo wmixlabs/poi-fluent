@@ -13,9 +13,11 @@ public class WMXCell<T> {
     private final WMXStyle style;
     private String formula, comment, link;
     private int mergedColumns, mergedRows;
+    private WMXRow parent;
 
-    public WMXCell(T value) {
+    public WMXCell(T value, WMXRow parent) {
         this.value = value;
+        this.parent = parent;
         this.style = new WMXStyle();
     }
 
@@ -187,5 +189,9 @@ public class WMXCell<T> {
 
     public String getFormula() {
         return this.formula;
+    }
+
+    public WMXRow and() {
+        return parent;
     }
 }
