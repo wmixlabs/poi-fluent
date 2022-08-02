@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class WMXStyle {
@@ -16,6 +17,7 @@ public class WMXStyle {
     private Short fontSize;
     private boolean fontBold;
     private IndexedColors backgroundColor, fontColor;
+    private Color customBackgroundColor, customFontColor;
     private Short dataFormatBuiltin;
     private String dataFormat;
 
@@ -136,6 +138,24 @@ public class WMXStyle {
         return this;
     }
 
+    public Color getCustomBackgroundColor() {
+        return customBackgroundColor;
+    }
+
+    public WMXStyle setCustomBackgroundColor(Color customBackgroundColor) {
+        this.customBackgroundColor = customBackgroundColor;
+        return this;
+    }
+
+    public Color getCustomFontColor() {
+        return customFontColor;
+    }
+
+    public WMXStyle setCustomFontColor(Color customFontColor) {
+        this.customFontColor = customFontColor;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,6 +176,8 @@ public class WMXStyle {
         final int hashFontSize = this.fontSize != null ? this.fontSize.hashCode() : 0;
         final int hashFontColor = this.fontColor != null ? this.fontColor.hashCode() : 0;
         final int hashBackgroundColor = this.backgroundColor != null ? this.backgroundColor.hashCode() : 0;
+        final int hashCustomFontColor = this.customFontColor != null ? this.customFontColor.hashCode() : 0;
+        final int hashCustomBackgroundColor = this.customBackgroundColor != null ? this.customBackgroundColor.hashCode() : 0;
         final int hashDataFormatBuiltin = this.dataFormatBuiltin != null ? this.dataFormatBuiltin.hashCode() : 0;
         final int hashDataFormat = this.dataFormat != null ? this.dataFormat.hashCode() : 0;
         return Objects.hash(this.fontBold,
@@ -169,6 +191,8 @@ public class WMXStyle {
                 hashFontSize,
                 hashFontColor,
                 hashBackgroundColor,
+                hashCustomFontColor,
+                hashCustomBackgroundColor,
                 hashDataFormatBuiltin,
                 hashDataFormat
         );
