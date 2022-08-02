@@ -257,7 +257,7 @@ public class WMXSpreadsheet {
     }
 
     public void toFile(final String path) throws IOException {
-        toFile(WMXFormat.XLS, path);
+        toFile(WMXFormat.XLSX, path);
     }
 
     public void toFile(final WMXFormat format, final String path) throws IOException {
@@ -269,7 +269,7 @@ public class WMXSpreadsheet {
     }
 
     public byte[] toByteArray() throws IOException {
-        return toByteArray(WMXFormat.XLS);
+        return toByteArray(WMXFormat.XLSX);
     }
 
     public byte[] toByteArray(final WMXFormat format) throws IOException {

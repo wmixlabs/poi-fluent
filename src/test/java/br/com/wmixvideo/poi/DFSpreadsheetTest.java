@@ -28,7 +28,7 @@ class DFSpreadsheetTest {
         row.withCell("Essa letra \u00E9 vermelha").withFontColor(IndexedColors.RED);
         row.withCell("Font Alef").withFontFamily("alef");
         row.withCell("Font 20").withFontSize((short) 20);
-        spreadsheet.toFile("/tmp/planilha_basica_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile(WMXFormat.XLS, "/tmp/planilha_basica_" + LocalDateTime.now().format(FORMATTER) + ".xls");
     }
 
     @Test
@@ -47,7 +47,7 @@ class DFSpreadsheetTest {
         for (int i = 0; i < 10; i++) {
             rowIII.withCell("Celula " + i);
         }
-        spreadsheet.toFile("/tmp/planilha_merges_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_merges_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -67,7 +67,7 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell(LocalDateTime.now()).withDataFormat((short) 0x16);
         sheet.withRow().withCell(Boolean.TRUE);
         sheet.withRow().withCell(Boolean.FALSE);
-        spreadsheet.toFile("/tmp/planilha_formatos_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_formatos_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -77,7 +77,7 @@ class DFSpreadsheetTest {
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("Filme");
         sheet.withRow().withCell("tt0899128").withLink("https://www.imdb.com/title/tt0899128/?ref_=nv_sr_srsg_0");
-        spreadsheet.toFile("/tmp/planilha_link_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_link_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -90,7 +90,7 @@ class DFSpreadsheetTest {
         dfRow.withCell("Texto");
         sheet.withRow().withCell("curto");
         sheet.withAutoSizeColumns(true);
-        spreadsheet.toFile("/tmp/planilha_autosize_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_autosize_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -99,7 +99,7 @@ class DFSpreadsheetTest {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("").withFormula("DATE(2020,12,1)");
-        spreadsheet.toFile("/tmp/planilha_formula_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_formula_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -159,7 +159,7 @@ class DFSpreadsheetTest {
         dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.ROYAL_BLUE);
         dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.SKY_BLUE);
 
-        spreadsheet.toFile("/tmp/planilha_agrupamento_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_agrupamento_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -219,7 +219,7 @@ class DFSpreadsheetTest {
         dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.ROYAL_BLUE);
         dfRowVI.withCell("Celula 5").withBackgroundColor(IndexedColors.SKY_BLUE);
 
-        spreadsheet.toFile(WMXFormat.XLSX, "/tmp/planilha_cores_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+        spreadsheet.toFile("/tmp/planilha_cores_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -583,7 +583,7 @@ class DFSpreadsheetTest {
         sheet.freeze(2, 3);
         sheet.withAutoSizeColumns(true);
 
-        spreadsheet.toFile("/tmp/planilha_modelo_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_modelo_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
@@ -629,6 +629,6 @@ class DFSpreadsheetTest {
         rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,D4:D12)").totalizer();
         rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,E4:E12)").totalizer();
 
-        spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xls");
+        spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 }
