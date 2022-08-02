@@ -5,7 +5,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -38,7 +41,7 @@ public class WMXSpreadsheet {
             for (WMXRow row : sheet.getRows()) {
                 final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
-                for (WMXCell cell : row.getCells()) {
+                for (WMXCell<?> cell : row.getCells()) {
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
                 }
@@ -78,7 +81,7 @@ public class WMXSpreadsheet {
                 agrupador = agrupadorLinha;
                 linhasAgrupadasAtual = new ArrayList<>();
                 linhasAgrupadasAtual.add(i);
-            } else if (agrupador != null && agrupadorLinha == null) {
+            } else if (agrupador != null) {
                 agrupador = null;
                 agrupamentosTotais.add(linhasAgrupadasAtual);
                 linhasAgrupadasAtual = new ArrayList<>();
@@ -93,7 +96,7 @@ public class WMXSpreadsheet {
         }
     }
 
-    private void buildGenerateCell(final WMXCell cell, int posicaoCelula, final Row row, final Sheet sheet, final Map<Integer, CellStyle> styles) {
+    private void buildGenerateCell(final WMXCell<?> cell, int posicaoCelula, final Row row, final Sheet sheet, final Map<Integer, CellStyle> styles) {
         //Crio celula
         final Cell cellCriada = row.createCell(posicaoCelula);
 

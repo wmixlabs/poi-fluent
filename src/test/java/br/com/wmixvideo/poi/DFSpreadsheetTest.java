@@ -194,11 +194,11 @@ class DFSpreadsheetTest {
 
         final WMXRow dfRowIV = sheet.withRow().withGroup("Agrupador2");
         dfRowIV.withCell("Linha 4 agrupada").withBackgroundColor(IndexedColors.GREY_50_PERCENT);
-        dfRowIV.withCell("Celula 1").withBackgroundColor(new Color(0xFF7373));
-        dfRowIV.withCell("Celula 2").withBackgroundColor(new Color(0x419000));
-        dfRowIV.withCell("Celula 3").withBackgroundColor(new Color(0xF3F2B1));
-        dfRowIV.withCell("Celula 4").withBackgroundColor(new Color(0xC740F6));
-        dfRowIV.withCell("Celula 5").withBackgroundColor(new Color(0xBABAFF));
+        dfRowIV.withCell("Celula 1").withBackgroundColor(new Color(0xFCCACA)).withFontColor(new Color(0x9B3131));
+        dfRowIV.withCell("Celula 2").withBackgroundColor(new Color(0xBBD0AD)).withFontColor(new Color(0x2F6222));
+        dfRowIV.withCell("Celula 3").withBackgroundColor(new Color(0xFDF3C2)).withFontColor(new Color(0x726C0B));
+        dfRowIV.withCell("Celula 4").withBackgroundColor(new Color(0xE5C9EE)).withFontColor(new Color(0x421652));
+        dfRowIV.withCell("Celula 5").withBackgroundColor(new Color(0xAECAF5)).withFontColor(new Color(0x1A4B9B));
 
         final WMXRow dfRowV = sheet.withRow().withGroup("Agrupador2");
         dfRowV.withCell("Linha 5 agrupada");
