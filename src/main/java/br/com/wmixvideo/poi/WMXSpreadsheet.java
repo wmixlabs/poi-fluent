@@ -27,8 +27,8 @@ public class WMXSpreadsheet {
         this.sheets = new ArrayList<>();
     }
 
-    public WMXSheet withSheet(String name) {
-        final WMXSheet sheet = new WMXSheet(name);
+    public WMXSheet withSheet(final String name) {
+        final WMXSheet sheet = new WMXSheet(name, this);
         this.sheets.add(sheet);
         return sheet;
     }
