@@ -1,9 +1,11 @@
 package br.com.wmixvideo.poi;
 
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+
+import java.awt.*;
 
 public class WMXCell<T> {
 
@@ -11,9 +13,11 @@ public class WMXCell<T> {
     private final WMXStyle style;
     private String formula, comment, link;
     private int mergedColumns, mergedRows;
+    private WMXRow parent;
 
-    public WMXCell(T value) {
+    public WMXCell(T value, WMXRow parent) {
         this.value = value;
+        this.parent = parent;
         this.style = new WMXStyle();
     }
 
@@ -67,6 +71,11 @@ public class WMXCell<T> {
         return this;
     }
 
+    public WMXCell<T> withFontColor(final Color color) {
+        this.style.setCustomFontColor(color);
+        return this;
+    }
+
     public WMXCell<T> withFontSize(final Short size) {
         this.style.setFontSize(size);
         return this;
@@ -77,8 +86,8 @@ public class WMXCell<T> {
         return this;
     }
 
-    public WMXCell<T> withBackgroundColorHSSF(final HSSFColor color) {
-        this.style.setBackgroundColorHSSF(color);
+    public WMXCell<T> withBackgroundColor(final Color color) {
+        this.style.setCustomBackgroundColor(color);
         return this;
     }
 
@@ -180,5 +189,9 @@ public class WMXCell<T> {
 
     public String getFormula() {
         return this.formula;
+    }
+
+    public WMXRow and() {
+        return parent;
     }
 }
