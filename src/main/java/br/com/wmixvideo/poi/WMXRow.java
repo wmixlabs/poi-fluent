@@ -8,7 +8,6 @@ public class WMXRow {
     private final List<WMXCell> cells;
     private final WMXSheet parent;
     private String group;
-    private String subGroup;
 
     public WMXRow(final WMXSheet sheet) {
         parent = sheet;
@@ -30,20 +29,11 @@ public class WMXRow {
         return this;
     }
 
-    public WMXRow withSubGroup(String subGroup) {
-        this.subGroup = subGroup;
-        return this;
-    }
-
     public String getGroup() {
         return group;
     }
 
-    public String getSubGroup() {
-        return subGroup;
-    }
-
-    public WMXSheet and() {
+    public WMXSheet and(){
         return this.parent;
     }
 }
