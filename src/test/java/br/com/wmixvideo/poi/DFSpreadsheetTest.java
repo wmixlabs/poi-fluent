@@ -1,15 +1,22 @@
 package br.com.wmixvideo.poi;
 
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.formula.EvaluationWorkbook;
+import org.apache.poi.ss.formula.udf.UDFFinder;
+import org.apache.poi.ss.usermodel.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.List;
 
 class DFSpreadsheetTest {
 
@@ -116,7 +123,7 @@ class DFSpreadsheetTest {
                 .withCell("Celula 4").withBackgroundColor(IndexedColors.GREY_25_PERCENT).and()
                 .withCell("Celula 5").withBackgroundColor(IndexedColors.GREY_25_PERCENT);
 
-        sheet.withRow().withGroup("Agrupador1")
+        sheet.withRow().withGroup("Agrupador1").withSubGroup("SubGrupo1")
                 .withCell("Linha 2 agrupada").and()
                 .withCell("Celula 1").and()
                 .withCell("Celula 2").and()
@@ -124,7 +131,7 @@ class DFSpreadsheetTest {
                 .withCell("Celula 4").and()
                 .withCell("Celula 5");
 
-        sheet.withRow().withGroup("Agrupador1")
+        sheet.withRow().withGroup("Agrupador1").withSubGroup("SubGrupo1")
                 .withCell("Linha 3 agrupada").and()
                 .withCell("Celula 1").and()
                 .withCell("Celula 2").and()

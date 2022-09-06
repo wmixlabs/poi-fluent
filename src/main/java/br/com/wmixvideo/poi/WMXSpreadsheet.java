@@ -63,11 +63,15 @@ public class WMXSpreadsheet {
 
     private void buildGenerateGroupLines(final WMXSheet sheet, final Sheet sheetCriado) {
         String agrupador = null;
+        String subAgrupador = null;
         List<List<Integer>> agrupamentosTotais = new ArrayList<>();
+        List<List<Integer>> subAgrupamentosTotais = new ArrayList<>();
         List<Integer> linhasAgrupadasAtual = new ArrayList<>();
+        List<Integer> linhasSubAgrupadasAtual = new ArrayList<>();
         for (int i = 0; i < sheet.getRows().size(); i++) {
             final WMXRow dfRow = sheet.getRows().get(i);
             final String agrupadorLinha = dfRow.getGroup();
+            final String subAgrupadorLinha = dfRow.getSubGroup();
             if (agrupador != null && agrupadorLinha != null) {
                 if (Objects.equals(agrupador, agrupadorLinha)) {
                     linhasAgrupadasAtual.add(i);
@@ -86,12 +90,37 @@ public class WMXSpreadsheet {
                 agrupamentosTotais.add(linhasAgrupadasAtual);
                 linhasAgrupadasAtual = new ArrayList<>();
             }
+            if(subAgrupador != null && subAgrupadorLinha != null) {
+                if(Objects.equals(subAgrupador, subAgrupadorLinha)){
+                    linhasSubAgrupadasAtual.add(i);
+                } else {
+                    subAgrupador = subAgrupadorLinha;
+                    subAgrupamentosTotais.add(linhasSubAgrupadasAtual);
+                    linhasSubAgrupadasAtual = new ArrayList<>();
+                    linhasSubAgrupadasAtual.add(i);
+                }
+            } else if(subAgrupador == null && subAgrupadorLinha != null) {
+                subAgrupador = subAgrupadorLinha;
+                linhasSubAgrupadasAtual = new ArrayList<>();
+                linhasSubAgrupadasAtual.add(i);
+            } else if(subAgrupador != null ) {
+                subAgrupador = null;
+                subAgrupamentosTotais.add(linhasSubAgrupadasAtual);
+                linhasSubAgrupadasAtual = new ArrayList<>();
+            }
         }
         if (!linhasAgrupadasAtual.isEmpty()) {
             agrupamentosTotais.add(linhasAgrupadasAtual);
         }
+        if (!linhasSubAgrupadasAtual.isEmpty()){
+            subAgrupamentosTotais.add(linhasSubAgrupadasAtual);
+        }
         for (List<Integer> agrupamento : agrupamentosTotais) {
             sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size()-1));
+            sheetCriado.setRowSumsBelow(false);
+        }
+        for(List<Integer> subAgrupamento : subAgrupamentosTotais){
+            sheetCriado.groupRow(subAgrupamento.get(0) + 1, subAgrupamento.get(subAgrupamento.size()-1));
             sheetCriado.setRowSumsBelow(false);
         }
     }
