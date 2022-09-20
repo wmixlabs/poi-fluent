@@ -41,6 +41,7 @@ public class WMXSpreadsheet {
             for (WMXRow row : sheet.getRows()) {
                 final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
+                sheetCriado.getRow(rowCriada.getRowNum()).setZeroHeight(row.isHiddenRow());
                 for (WMXCell<?> cell : row.getCells()) {
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
@@ -142,7 +143,6 @@ public class WMXSpreadsheet {
         }
 
         sheet.setColumnHidden(cellCriada.getColumnIndex(), cell.isHiddenColumn());
-        sheet.getRow(cellCriada.getRowIndex()).setZeroHeight(cell.isHiddenRow());
 
         //Crio regiao com merge
         if (cell.getMergedColumns() > 0 || cell.getMergedRows() > 0) {
