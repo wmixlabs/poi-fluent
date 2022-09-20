@@ -141,8 +141,8 @@ public class WMXSpreadsheet {
             cellCriada.setHyperlink(hyperlink);
         }
 
-        sheet.setColumnHidden(cell.getIndexHiddenColumn(), cell.isHiddenColumn());
-        sheet.getRow(cell.getIndexHiddenRow()).setZeroHeight(cell.isHiddenRow());
+        sheet.setColumnHidden(cellCriada.getColumnIndex(), cell.isHiddenColumn());
+        sheet.getRow(cellCriada.getRowIndex()).setZeroHeight(cell.isHiddenRow());
 
         //Crio regiao com merge
         if (cell.getMergedColumns() > 0 || cell.getMergedRows() > 0) {

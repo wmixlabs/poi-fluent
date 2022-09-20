@@ -11,7 +11,7 @@ public class WMXCell<T> {
     private T value;
     private final WMXStyle style;
     private String formula, comment, link;
-    private int mergedColumns, mergedRows, indexHiddenColumn, indexHiddenRow;
+    private int mergedColumns, mergedRows;
     private boolean hiddenColumn, hiddenRow;
     private WMXRow parent;
 
@@ -109,22 +109,12 @@ public class WMXCell<T> {
         return mergedColumns;
     }
 
-    public int getIndexHiddenColumn() {
-        return indexHiddenColumn;
-    }
-
-    public int getIndexHiddenRow() {
-        return indexHiddenRow;
-    }
-
-    public WMXCell<T> withHiddenColumns(final int indexHiddenColumn){
-        this.indexHiddenColumn = indexHiddenColumn;
-        this.hiddenColumn = true;
+    public WMXCell<T> withHiddenColumn(final boolean hiddenColumn){
+        this.hiddenColumn = hiddenColumn;
         return this;
     }
-    public WMXCell<T> withHiddenRows(final int indexHiddenRow){
-        this.indexHiddenRow = indexHiddenRow;
-        this.hiddenRow = true;
+    public WMXCell<T> withHiddenRow(final boolean hiddenRow){
+        this.hiddenRow = hiddenRow;
         return this;
     }
 
