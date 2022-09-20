@@ -3,7 +3,6 @@ package br.com.wmixvideo.poi;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 
 import java.awt.*;
 
@@ -12,7 +11,8 @@ public class WMXCell<T> {
     private T value;
     private final WMXStyle style;
     private String formula, comment, link;
-    private int mergedColumns, mergedRows;
+    private int mergedColumns, mergedRows, indexHiddenColumn, indexHiddenRow;
+    private boolean hiddenColumn, hiddenRow;
     private WMXRow parent;
 
     public WMXCell(T value, WMXRow parent) {
@@ -109,6 +109,25 @@ public class WMXCell<T> {
         return mergedColumns;
     }
 
+    public int getIndexHiddenColumn() {
+        return indexHiddenColumn;
+    }
+
+    public int getIndexHiddenRow() {
+        return indexHiddenRow;
+    }
+
+    public WMXCell<T> withHiddenColumns(final int indexHiddenColumn){
+        this.indexHiddenColumn = indexHiddenColumn;
+        this.hiddenColumn = true;
+        return this;
+    }
+    public WMXCell<T> withHiddenRows(final int indexHiddenRow){
+        this.indexHiddenRow = indexHiddenRow;
+        this.hiddenRow = true;
+        return this;
+    }
+
     public WMXCell<T> withMergedRows(final int size) {
         this.mergedRows = size;
         return this;
@@ -189,6 +208,14 @@ public class WMXCell<T> {
 
     public String getFormula() {
         return this.formula;
+    }
+
+    public boolean isHiddenColumn() {
+        return hiddenColumn;
+    }
+
+    public boolean isHiddenRow() {
+        return hiddenRow;
     }
 
     public WMXRow and() {

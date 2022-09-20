@@ -46,7 +46,6 @@ public class WMXSpreadsheet {
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
                 }
             }
-
             sheetCriado.createFreezePane(sheet.getFreezeCols(), sheet.getFreezeRows());
 
             //Processa agrupamento de linhas
@@ -91,7 +90,7 @@ public class WMXSpreadsheet {
             agrupamentosTotais.add(linhasAgrupadasAtual);
         }
         for (List<Integer> agrupamento : agrupamentosTotais) {
-            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size()-1));
+            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size() - 1));
             sheetCriado.setRowSumsBelow(false);
         }
     }
@@ -142,6 +141,9 @@ public class WMXSpreadsheet {
             cellCriada.setHyperlink(hyperlink);
         }
 
+        sheet.setColumnHidden(cell.getIndexHiddenColumn(), cell.isHiddenColumn());
+        sheet.getRow(cell.getIndexHiddenRow()).setZeroHeight(cell.isHiddenRow());
+
         //Crio regiao com merge
         if (cell.getMergedColumns() > 0 || cell.getMergedRows() > 0) {
             final int rowIndex = cellCriada.getRowIndex();
@@ -152,19 +154,19 @@ public class WMXSpreadsheet {
             final CellRangeAddress region = new CellRangeAddress(rowIndex, lastRow, columnIndex, lastCol);
             sheet.addMergedRegion(region);
 
-            if(cell.getStyle().getBorderTop() != null ){
+            if (cell.getStyle().getBorderTop() != null) {
                 RegionUtil.setBorderTop(cell.getStyle().getBorderTop(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderBottom() != null ) {
+            if (cell.getStyle().getBorderBottom() != null) {
                 RegionUtil.setBorderBottom(cell.getStyle().getBorderBottom(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderLeft() != null ) {
+            if (cell.getStyle().getBorderLeft() != null) {
                 RegionUtil.setBorderLeft(cell.getStyle().getBorderLeft(), region, sheet);
             }
 
-            if(cell.getStyle().getBorderRight() != null ) {
+            if (cell.getStyle().getBorderRight() != null) {
                 RegionUtil.setBorderRight(cell.getStyle().getBorderRight(), region, sheet);
             }
         }
@@ -176,7 +178,7 @@ public class WMXSpreadsheet {
         for (WMXStyle dfStyle : styles) {
             final CellStyle cellStyle = woorkBook.createCellStyle();
 
-            if(dfStyle.getHorizontalAlignment() != null ){
+            if (dfStyle.getHorizontalAlignment() != null) {
                 cellStyle.setAlignment(dfStyle.getHorizontalAlignment());
             }
 
@@ -186,7 +188,7 @@ public class WMXSpreadsheet {
             }
 
             if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof XSSFWorkbook) {
-                ((XSSFCellStyle)cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((XSSFWorkbook)woorkBook).getStylesSource().getIndexedColors()));
+                ((XSSFCellStyle) cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
@@ -219,7 +221,7 @@ public class WMXSpreadsheet {
                     font.setColor(dfStyle.getFontColor().getIndex());
                 }
                 if (dfStyle.getCustomFontColor() != null && woorkBook instanceof XSSFWorkbook) {
-                    ((XSSFFont)font).setColor(new XSSFColor(dfStyle.getCustomFontColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
+                    ((XSSFFont) font).setColor(new XSSFColor(dfStyle.getCustomFontColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
                 }
                 cellStyle.setFont(font);
             }
