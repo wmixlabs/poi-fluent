@@ -3,7 +3,6 @@ package br.com.wmixvideo.poi;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 
 import java.awt.*;
 
@@ -13,6 +12,7 @@ public class WMXCell<T> {
     private final WMXStyle style;
     private String formula, comment, link;
     private int mergedColumns, mergedRows;
+    private boolean hiddenColumn;
     private WMXRow parent;
 
     public WMXCell(T value, WMXRow parent) {
@@ -109,6 +109,11 @@ public class WMXCell<T> {
         return mergedColumns;
     }
 
+    public WMXCell<T> withHiddenColumn(final boolean hiddenColumn){
+        this.hiddenColumn = hiddenColumn;
+        return this;
+    }
+
     public WMXCell<T> withMergedRows(final int size) {
         this.mergedRows = size;
         return this;
@@ -189,6 +194,10 @@ public class WMXCell<T> {
 
     public String getFormula() {
         return this.formula;
+    }
+
+    public boolean isHiddenColumn() {
+        return hiddenColumn;
     }
 
     public WMXRow and() {

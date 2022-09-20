@@ -224,6 +224,19 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
+    public void testeOcultaExibicao() throws Exception{
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        sheet.withRow().withCell("Coluna 1 não escondida").and()
+                .withCell("Coluna 2 escondida").withHiddenColumn(true);
+        sheet.withRow().withHiddenRow(true).withCell("Linha escondida");
+        sheet.withAutoSizeColumns(true);
+        spreadsheet.toFile("/tmp/planilha_oculta_coluna_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+
+    @Test
+    @Disabled
     public void testePlanilhaModelo() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
         final WMXSheet sheet = spreadsheet.withSheet("Teste");

@@ -1,5 +1,7 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.ss.formula.functions.T;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ public class WMXRow {
     private final List<WMXCell> cells;
     private final WMXSheet parent;
     private String group;
+    private boolean hiddenRow;
 
     public WMXRow(final WMXSheet sheet) {
         parent = sheet;
@@ -27,6 +30,14 @@ public class WMXRow {
     public WMXRow withGroup(String group) {
         this.group = group;
         return this;
+    }
+    public WMXRow withHiddenRow(final boolean hiddenRow){
+        this.hiddenRow = hiddenRow;
+        return this;
+    }
+
+    public boolean isHiddenRow() {
+        return hiddenRow;
     }
 
     public String getGroup() {
