@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class WMXCell<T> {
         this.value = value;
         this.parent = parent;
         this.style = new WMXStyle();
-        if(value instanceof LocalDate){
+        if (value instanceof LocalDate) {
             this.withDataFormat("yyyy-MM-dd");
         } else if (value instanceof LocalDateTime) {
             this.withDataFormat("yyyy-MM-dd hh:mm:ss");
@@ -117,7 +118,7 @@ public class WMXCell<T> {
         return mergedColumns;
     }
 
-    public WMXCell<T> withHiddenColumn(final boolean hiddenColumn){
+    public WMXCell<T> withHiddenColumn(final boolean hiddenColumn) {
         this.hiddenColumn = hiddenColumn;
         return this;
     }
@@ -210,5 +211,13 @@ public class WMXCell<T> {
 
     public WMXRow and() {
         return parent;
+    }
+
+    public int getIndex() {
+        int index = 0;
+        for (int i = 0; i < this.parent.getCells().indexOf(this); i++) {
+            index+= Math.max(this.parent.getCells().get(i).getMergedColumns(), 1);
+        }
+        return index+1;
     }
 }

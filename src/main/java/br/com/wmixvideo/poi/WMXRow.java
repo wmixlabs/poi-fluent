@@ -47,4 +47,12 @@ public class WMXRow {
     public WMXSheet and(){
         return this.parent;
     }
+
+    public int getIndex() {
+        int index = 0;
+        for (int i = 0; i < this.parent.getRows().indexOf(this); i++) {
+            index++;
+        }
+        return index+1;
+    }
 }
