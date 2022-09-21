@@ -5,6 +5,9 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class WMXCell<T> {
 
@@ -19,6 +22,11 @@ public class WMXCell<T> {
         this.value = value;
         this.parent = parent;
         this.style = new WMXStyle();
+        if(value instanceof LocalDate){
+            this.withDataFormat("yyyy-MM-dd");
+        } else if (value instanceof LocalDateTime) {
+            this.withDataFormat("yyyy-MM-dd hh:mm:ss");
+        }
     }
 
     public WMXCell<T> withValue(final T value) {
