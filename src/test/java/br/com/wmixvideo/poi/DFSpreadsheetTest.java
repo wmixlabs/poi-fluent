@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 class DFSpreadsheetTest {
 
@@ -233,6 +234,18 @@ class DFSpreadsheetTest {
         sheet.withRow().withHiddenRow(true).withCell("Linha escondida");
         sheet.withAutoSizeColumns(true);
         spreadsheet.toFile("/tmp/planilha_oculta_coluna_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+
+    @Test
+    @Disabled
+    public void testeFormataDataPadrao() throws Exception{
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        sheet.withRow().withCell(LocalDate.now()).and()
+                .withCell(LocalDateTime.now()).and()
+                .withCell(new Date());
+        spreadsheet.toFile("/tmp/planilha_data_padrao" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
