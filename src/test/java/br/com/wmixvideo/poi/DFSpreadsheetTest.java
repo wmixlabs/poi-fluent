@@ -282,7 +282,7 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
-    public void testeLetter(){
+    public void testeIndexLetter(){
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
