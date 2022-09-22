@@ -2,6 +2,7 @@ package br.com.wmixvideo.poi;
 
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -246,6 +247,37 @@ class DFSpreadsheetTest {
                 .withCell(LocalDateTime.now()).and()
                 .withCell(new Date());
         spreadsheet.toFile("/tmp/planilha_data_padrao" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+
+    @Test
+    @Disabled
+    public void testeIndexColumns() {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        Assertions.assertEquals(3, sheet.withRow().withCell("Coluna 1").and()
+                .withCell("Coluna 2").and()
+                .withCell("Coluna 3").getIndex());
+
+        Assertions.assertEquals(1, sheet.withRow().
+                withCell("Coluna 1 merge de 4 celulas").withMergedColumns(4).getIndex());
+
+        Assertions.assertEquals(5, sheet.withRow().
+                withCell("Coluna 1 merge de 4 celulas").withMergedColumns(4).and()
+                .withCell("Coluna 2 ").getIndex());
+    }
+
+    @Test
+    @Disabled
+    public void testeIndexRows(){
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        final WMXRow row1 = sheet.withRow();
+        final WMXRow row2 = sheet.withRow();
+
+        Assertions.assertEquals(2, row2.getIndex());
+        Assertions.assertEquals(1, row1.getIndex());
     }
 
     @Test
