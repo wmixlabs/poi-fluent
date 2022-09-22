@@ -3,12 +3,11 @@ package br.com.wmixvideo.poi;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellReference;
 
 import java.awt.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class WMXCell<T> {
 
@@ -219,5 +218,9 @@ public class WMXCell<T> {
             index+= Math.max(this.parent.getCells().get(i).getMergedColumns(), 1);
         }
         return index+1;
+    }
+
+    public String getIndexLetter(){
+        return CellReference.convertNumToColString(this.getIndex()-1);
     }
 }
