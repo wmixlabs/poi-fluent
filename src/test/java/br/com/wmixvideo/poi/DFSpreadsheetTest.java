@@ -282,6 +282,17 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
+    public void testeLetter(){
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+
+        Assertions.assertEquals("A", sheet.withRow().withCell("Teste").getLetter());
+        Assertions.assertEquals("B", sheet.withRow().withCell("Coluna1").and().withCell("Coluna2").getLetter());
+    }
+
+    @Test
+    @Disabled
     public void testePlanilhaModelo() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
