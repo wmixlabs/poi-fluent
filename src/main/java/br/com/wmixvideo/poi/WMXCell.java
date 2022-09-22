@@ -220,7 +220,7 @@ public class WMXCell<T> {
         return index+1;
     }
 
-    public String getLetter(){
+    public String getIndexLetter(){
         return CellReference.convertNumToColString(this.getIndex()-1);
     }
 }

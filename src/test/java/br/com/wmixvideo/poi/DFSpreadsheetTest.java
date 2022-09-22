@@ -287,8 +287,8 @@ class DFSpreadsheetTest {
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
 
-        Assertions.assertEquals("A", sheet.withRow().withCell("Teste").getLetter());
-        Assertions.assertEquals("B", sheet.withRow().withCell("Coluna1").and().withCell("Coluna2").getLetter());
+        Assertions.assertEquals("A", sheet.withRow().withCell("Teste").getIndexLetter());
+        Assertions.assertEquals("B", sheet.withRow().withCell("Coluna1").and().withCell("Coluna2").getIndexLetter());
     }
 
     @Test
