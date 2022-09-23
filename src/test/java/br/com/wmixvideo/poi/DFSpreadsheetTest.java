@@ -226,7 +226,7 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
-    public void testeOcultaExibicao() throws Exception{
+    public void testeOcultaExibicao() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
@@ -239,7 +239,7 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
-    public void testeFormataDataPadrao() throws Exception{
+    public void testeFormataDataPadrao() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
@@ -269,7 +269,7 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
-    public void testeIndexRows(){
+    public void testeIndexRows() {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
@@ -282,13 +282,36 @@ class DFSpreadsheetTest {
 
     @Test
     @Disabled
-    public void testeIndexLetter(){
+    public void testeIndexLetter() {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
 
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
 
         Assertions.assertEquals("A", sheet.withRow().withCell("Teste").getIndexLetter());
         Assertions.assertEquals("B", sheet.withRow().withCell("Coluna1").and().withCell("Coluna2").getIndexLetter());
+    }
+
+    @Test
+    @Disabled
+    public void testeSubTotal() throws Exception {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+
+        sheet.withRow().withCell("COLUNA A").subtitle()
+                .and().withCell("COLUNA B").subtitle();
+
+        sheet.withRow().withCell("A").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell("A").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell("B").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell("B").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell(null).and().withCell("Teste");
+        sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
+        sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
+        sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
+        sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
+
+        spreadsheet.toFile("/tmp/planilha_sub_total" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
