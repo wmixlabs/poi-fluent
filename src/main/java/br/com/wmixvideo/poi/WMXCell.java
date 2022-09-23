@@ -215,12 +215,16 @@ public class WMXCell<T> {
     public int getIndex() {
         int index = 0;
         for (int i = 0; i < this.parent.getCells().indexOf(this); i++) {
-            index+= Math.max(this.parent.getCells().get(i).getMergedColumns(), 1);
+            index += Math.max(this.parent.getCells().get(i).getMergedColumns(), 1);
         }
-        return index+1;
+        return index + 1;
     }
 
-    public String getIndexLetter(){
-        return CellReference.convertNumToColString(this.getIndex()-1);
+    public String getIndexLetter() {
+        return CellReference.convertNumToColString(this.getIndex() - 1);
+    }
+
+    public WMXCell<T> subtotal() {
+        return this.withFormula(String.format("SUBTOTAL(109,%s%s:%s%s)", this.getIndexLetter(), 1, this.getIndexLetter(), this.parent.getIndex() - 1));
     }
 }
