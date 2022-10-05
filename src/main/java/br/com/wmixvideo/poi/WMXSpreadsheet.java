@@ -41,6 +41,7 @@ public class WMXSpreadsheet {
             for (WMXRow row : sheet.getRows()) {
                 final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
+
                 sheetCriado.getRow(rowCriada.getRowNum()).setZeroHeight(row.isHiddenRow());
                 for (WMXCell<?> cell : row.getCells()) {
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
@@ -56,6 +57,10 @@ public class WMXSpreadsheet {
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
                     sheetCriado.autoSizeColumn(indiceColuna);
                 }
+            }
+
+            if (sheet.getAutoFilterRange() != null) {
+                sheetCriado.setAutoFilter(new CellRangeAddress(sheet.getAutoFilterRange().getFirstRow(), sheet.getAutoFilterRange().getLastRow() - 1, sheet.getAutoFilterRange().getFirstColumn(), sheet.getAutoFilterRange().getLastColumn() - 1));
             }
         }
         return woorkBook;

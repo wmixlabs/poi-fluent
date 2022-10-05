@@ -10,6 +10,7 @@ public class WMXSheet {
     private final List<WMXRow> rows;
     private int freezeCols, freezeRows;
     private boolean autoSizeColumns;
+    private WMXCellRange autoFilterRange;
 
     public WMXSheet(final String name, final WMXSpreadsheet parent) {
         this.name = name;
@@ -56,8 +57,17 @@ public class WMXSheet {
         return this;
     }
 
+    public WMXSheet withAutoFilter(final int firstRow, final int firstColumn, final int lastRow, final int lastColumn) {
+        this.autoFilterRange = new WMXCellRange(firstRow, firstColumn, lastRow, lastColumn);
+        return this;
+    }
+
     public boolean isAutoSizeColumns() {
         return autoSizeColumns;
+    }
+
+    public WMXCellRange getAutoFilterRange() {
+        return autoFilterRange;
     }
 
     public WMXSpreadsheet and() {

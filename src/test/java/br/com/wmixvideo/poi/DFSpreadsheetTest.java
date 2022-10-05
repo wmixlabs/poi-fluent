@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -312,6 +313,26 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
 
         spreadsheet.toFile("/tmp/planilha_sub_total" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+
+    @Test
+    @Disabled
+    public void testeFiltro() throws Exception {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste").withAutoFilter(0,0, 1, 3);
+
+        sheet.withRow().withCell("COLUNA A").subtitle()
+                .and().withCell("COLUNA B").subtitle()
+                .and().withCell("COLUNA C").subtitle();
+
+        sheet.withRow().withCell("A").and().withCell(BigDecimal.valueOf(20000)).currency().and().withCell(BigDecimal.valueOf(10000)).currency();
+        sheet.withRow().withCell("A").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell("B").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell("B").and().withCell(BigDecimal.valueOf(20000)).currency();
+        sheet.withRow().withCell(null).and().withCell("Teste");
+        sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
+        sheet.withRow().withCell(null).and().withCell(null).currency();
+        spreadsheet.toFile("/tmp/planilha_auto_filter" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
