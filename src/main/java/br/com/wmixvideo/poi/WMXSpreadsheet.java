@@ -60,7 +60,8 @@ public class WMXSpreadsheet {
             }
 
             if (sheet.getAutoFilterRange() != null) {
-                sheetCriado.setAutoFilter(new CellRangeAddress(sheet.getAutoFilterRange().getFirstRow(), sheet.getAutoFilterRange().getLastRow() - 1, sheet.getAutoFilterRange().getFirstColumn(), sheet.getAutoFilterRange().getLastColumn() - 1));
+                sheetCriado.setAutoFilter(new CellRangeAddress(sheet.getAutoFilterRange().getFirstRow(), sheet.getAutoFilterRange().getLastRow() - 1,
+                        sheet.getAutoFilterRange().getFirstColumn(), sheet.getAutoFilterRange().getLastColumn() - 1));
             }
         }
         return woorkBook;

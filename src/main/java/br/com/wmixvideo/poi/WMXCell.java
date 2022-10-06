@@ -16,16 +16,16 @@ public class WMXCell<T> {
     private String formula, comment, link;
     private int mergedColumns, mergedRows;
     private boolean hiddenColumn;
-    private WMXRow parent;
+    private final WMXRow parent;
 
     public WMXCell(T value, WMXRow parent) {
         this.value = value;
         this.parent = parent;
         this.style = new WMXStyle();
         if (value instanceof LocalDate) {
-            this.withDataFormat("yyyy-MM-dd");
+            this.withDataFormat("dd/MM/yyyy");
         } else if (value instanceof LocalDateTime) {
-            this.withDataFormat("yyyy-MM-dd hh:mm:ss");
+            this.withDataFormat("dd/MM/yyyy hh:mm:ss");
         }
     }
 
@@ -52,7 +52,7 @@ public class WMXCell<T> {
     }
 
     public WMXCell<T> subtitle() {
-        return this.withBackgroundColor(IndexedColors.GREY_25_PERCENT);
+        return this.withBackgroundColor(IndexedColors.GREY_25_PERCENT).bold();
     }
 
     public WMXCell<T> totalizer() {
