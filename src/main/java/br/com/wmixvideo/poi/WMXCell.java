@@ -29,8 +29,6 @@ public class WMXCell<T> {
             this.withDataFormat("dd/MM/yyyy hh:mm:ss");
         } else if(value instanceof  Integer){
             this.withDataFormat("#,##0");
-        } else if(value instanceof BigDecimal){
-            this.withDataFormat("#,##0.00");
         }
     }
 
