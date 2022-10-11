@@ -233,7 +233,8 @@ class DFSpreadsheetTest {
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
         sheet.withRow().withCell("Coluna 1 não escondida").and()
                 .withCell("Coluna 2 escondida").withHiddenColumn(true);
-        sheet.withRow().withHiddenRow(true).withCell("Linha escondida");
+        sheet.withRow().withCell(null).and().withCell("Coluna 2 escondida ");
+//        sheet.withRow().withHiddenRow(true).withCell("Linha escondida");
         sheet.withAutoSizeColumns(true);
         spreadsheet.toFile("/tmp/planilha_oculta_coluna_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
