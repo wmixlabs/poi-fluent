@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellReference;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -26,6 +27,10 @@ public class WMXCell<T> {
             this.withDataFormat("dd/MM/yyyy");
         } else if (value instanceof LocalDateTime) {
             this.withDataFormat("dd/MM/yyyy hh:mm:ss");
+        } else if(value instanceof  Integer){
+            this.withDataFormat("#,##0");
+        } else if(value instanceof BigDecimal){
+            this.withDataFormat("#,##0.00");
         }
     }
 
