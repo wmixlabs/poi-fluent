@@ -44,11 +44,11 @@ public class WMXCell<T> {
 
 
     public WMXCell<T> header() {
-        return this.withHorizontalAligment(HorizontalAlignment.CENTER).withBackgroundColor(IndexedColors.GREY_80_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        return this.withBackgroundColor(IndexedColors.GREY_80_PERCENT).withFontColor(IndexedColors.WHITE).bold();
     }
 
     public WMXCell<T> title() {
-        return this.withBackgroundColor(IndexedColors.GREY_50_PERCENT).withFontColor(IndexedColors.WHITE).bold();
+        return this.withBackgroundColor(IndexedColors.GREY_50_PERCENT).bold();
     }
 
     public WMXCell<T> subtitle() {
