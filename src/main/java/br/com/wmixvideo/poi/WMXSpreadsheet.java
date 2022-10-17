@@ -37,6 +37,7 @@ public class WMXSpreadsheet {
         final Workbook woorkBook = WMXFormat.XLS.equals(format) ? new HSSFWorkbook() : new XSSFWorkbook();
         final Map<Integer, CellStyle> styles = buildGenerateStyles(woorkBook);
         for (WMXSheet sheet : this.sheets) {
+            final Set<Integer> columnsHidden = new HashSet<>();
             final Sheet sheetCriado = woorkBook.createSheet(sheet.getName());
             for (WMXRow row : sheet.getRows()) {
                 final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
@@ -44,9 +45,16 @@ public class WMXSpreadsheet {
 
                 sheetCriado.getRow(rowCriada.getRowNum()).setZeroHeight(row.isHiddenRow());
                 for (WMXCell<?> cell : row.getCells()) {
+                    if (cell.isHiddenColumn()) {
+                        columnsHidden.add(cell.getIndex()-1);
+                    }
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
+
                 }
+            }
+            for (Integer indexColumn : columnsHidden) {
+                sheetCriado.setColumnHidden(indexColumn, true);
             }
             sheetCriado.createFreezePane(sheet.getFreezeCols(), sheet.getFreezeRows());
 
@@ -147,8 +155,6 @@ public class WMXSpreadsheet {
             hyperlink.setAddress(cell.getLink());
             cellCriada.setHyperlink(hyperlink);
         }
-
-        sheet.setColumnHidden(cellCriada.getColumnIndex(), cell.isHiddenColumn());
 
         //Crio regiao com merge
         if (cell.getMergedColumns() > 0 || cell.getMergedRows() > 0) {
