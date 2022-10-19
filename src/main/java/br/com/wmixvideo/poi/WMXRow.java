@@ -1,7 +1,5 @@
 package br.com.wmixvideo.poi;
 
-import org.apache.poi.ss.formula.functions.T;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +36,14 @@ public class WMXRow {
 
     public boolean isHiddenRow() {
         return hiddenRow;
+    }
+
+    public WMXCell withEmptyCell(){
+        return this.withCell(null);
+    }
+
+    public WMXCell withEmptyCells(final int size){
+        return this.withCell(null).withMergedColumns(size);
     }
 
     public String getGroup() {
