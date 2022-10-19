@@ -44,7 +44,7 @@ public class WMXRow {
 
     public WMXRow withEmptyCells(final int size){
         for(int i = 0; i< size ; i++){
-            this.withCell(null);
+            this.withEmptyCell();
         }
         return this;
     }
