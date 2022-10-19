@@ -42,8 +42,11 @@ public class WMXRow {
         return this.withCell(null);
     }
 
-    public WMXCell withEmptyCells(final int size){
-        return this.withCell(null).withMergedColumns(size);
+    public WMXRow withEmptyCells(final int size){
+        for(int i = 0; i< size ; i++){
+            this.withCell(null);
+        }
+        return this;
     }
 
     public String getGroup() {

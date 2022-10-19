@@ -345,8 +345,7 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell("Coluna 1")
                 .and().withEmptyCell()
                 .and().withCell("Coluna 3")
-                .and().withEmptyCells(2)
-                .and().withCell("Coluna 6");
+                .and().withEmptyCells(2).withCell("Coluna 6");
         spreadsheet.toFile("/tmp/planilha_empty_cells" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
