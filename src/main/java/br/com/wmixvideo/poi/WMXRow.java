@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WMXRow {
 
-    private final List<WMXCell> cells;
+    private final List<WMXCell<?>> cells;
     private final WMXSheet parent;
     private String group;
     private boolean hiddenRow;
@@ -16,12 +16,23 @@ public class WMXRow {
     }
 
     public <FIELDVALUE> WMXCell<FIELDVALUE> withCell(FIELDVALUE value) {
-        final WMXCell cell = new WMXCell(value, this);
+        final WMXCell<FIELDVALUE> cell = new WMXCell<>(value, this);
         cells.add(cell);
         return cell;
     }
 
-    public List<WMXCell> getCells() {
+    public WMXCell<String> withCell() {
+        return this.withCell(null);
+    }
+
+    public WMXRow withCells(final int size) {
+        for (int i = 0; i < size; i++) {
+            this.withCell();
+        }
+        return this;
+    }
+
+    public List<WMXCell<?>> getCells() {
         return cells;
     }
 
@@ -29,7 +40,8 @@ public class WMXRow {
         this.group = group;
         return this;
     }
-    public WMXRow withHiddenRow(final boolean hiddenRow){
+
+    public WMXRow withHiddenRow(final boolean hiddenRow) {
         this.hiddenRow = hiddenRow;
         return this;
     }
@@ -38,22 +50,11 @@ public class WMXRow {
         return hiddenRow;
     }
 
-    public WMXCell withEmptyCell(){
-        return this.withCell(null);
-    }
-
-    public WMXRow withEmptyCells(final int size){
-        for(int i = 0; i< size ; i++){
-            this.withEmptyCell();
-        }
-        return this;
-    }
-
     public String getGroup() {
         return group;
     }
 
-    public WMXSheet and(){
+    public WMXSheet and() {
         return this.parent;
     }
 
@@ -62,6 +63,6 @@ public class WMXRow {
         for (int i = 0; i < this.parent.getRows().indexOf(this); i++) {
             index++;
         }
-        return index+1;
+        return index + 1;
     }
 }
