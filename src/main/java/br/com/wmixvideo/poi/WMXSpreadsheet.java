@@ -1,5 +1,6 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.commons.math3.util.Pair;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -46,7 +47,7 @@ public class WMXSpreadsheet {
                 sheetCriado.getRow(rowCriada.getRowNum()).setZeroHeight(row.isHiddenRow());
                 for (WMXCell<?> cell : row.getCells()) {
                     if (cell.isHiddenColumn()) {
-                        columnsHidden.add(cell.getIndex()-1);
+                        columnsHidden.add(cell.getIndex() - 1);
                     }
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
@@ -59,7 +60,7 @@ public class WMXSpreadsheet {
             sheetCriado.createFreezePane(sheet.getFreezeCols(), sheet.getFreezeRows());
 
             //Processa agrupamento de linhas
-            buildGenerateGroupLines(sheet, sheetCriado);
+            buildGenerateAssociedLines(sheet, sheetCriado);
 
             if (sheet.isAutoSizeColumns()) {
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
@@ -75,38 +76,15 @@ public class WMXSpreadsheet {
         return woorkBook;
     }
 
-    private void buildGenerateGroupLines(final WMXSheet sheet, final Sheet sheetCriado) {
-        String agrupador = null;
-        List<List<Integer>> agrupamentosTotais = new ArrayList<>();
-        List<Integer> linhasAgrupadasAtual = new ArrayList<>();
-        for (int i = 0; i < sheet.getRows().size(); i++) {
-            final WMXRow dfRow = sheet.getRows().get(i);
-            final String agrupadorLinha = dfRow.getGroup();
-            if (agrupador != null && agrupadorLinha != null) {
-                if (Objects.equals(agrupador, agrupadorLinha)) {
-                    linhasAgrupadasAtual.add(i);
-                } else {
-                    agrupador = agrupadorLinha;
-                    agrupamentosTotais.add(linhasAgrupadasAtual);
-                    linhasAgrupadasAtual = new ArrayList<>();
-                    linhasAgrupadasAtual.add(i);
-                }
-            } else if (agrupador == null && agrupadorLinha != null) {
-                agrupador = agrupadorLinha;
-                linhasAgrupadasAtual = new ArrayList<>();
-                linhasAgrupadasAtual.add(i);
-            } else if (agrupador != null) {
-                agrupador = null;
-                agrupamentosTotais.add(linhasAgrupadasAtual);
-                linhasAgrupadasAtual = new ArrayList<>();
+
+    private void buildGenerateAssociedLines(final WMXSheet sheet, final Sheet sheetCriado) {
+        final List<Pair<Integer, Integer>> grupos = new ArrayList<>();
+        for (WMXRow row : sheet.getRows()) {
+            if (!row.getGroupedRows().isEmpty()) {
+                System.out.printf("Grupo criado: %s, %s\n", row.getIndex(), row.getGroupedRows().get(row.getGroupedRows().size() - 1).getIndex() - 1);
+                sheetCriado.groupRow(row.getIndex(), row.getGroupedRows().get(row.getGroupedRows().size() - 1).getIndex() - 1);
+                sheetCriado.setRowSumsBelow(false);
             }
-        }
-        if (!linhasAgrupadasAtual.isEmpty()) {
-            agrupamentosTotais.add(linhasAgrupadasAtual);
-        }
-        for (List<Integer> agrupamento : agrupamentosTotais) {
-            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size() - 1));
-            sheetCriado.setRowSumsBelow(false);
         }
     }
 

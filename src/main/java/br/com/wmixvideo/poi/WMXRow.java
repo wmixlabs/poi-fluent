@@ -7,12 +7,13 @@ public class WMXRow {
 
     private final List<WMXCell<?>> cells;
     private final WMXSheet parent;
-    private String group;
     private boolean hiddenRow;
+    private List<WMXRow> groupedRows;
 
     public WMXRow(final WMXSheet sheet) {
-        parent = sheet;
+        this.parent = sheet;
         this.cells = new ArrayList<>();
+        this.groupedRows = new ArrayList<>();
     }
 
     public <FIELDVALUE> WMXCell<FIELDVALUE> withCell(FIELDVALUE value) {
@@ -36,11 +37,6 @@ public class WMXRow {
         return cells;
     }
 
-    public WMXRow withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public WMXRow withHiddenRow(final boolean hiddenRow) {
         this.hiddenRow = hiddenRow;
         return this;
@@ -50,8 +46,14 @@ public class WMXRow {
         return hiddenRow;
     }
 
-    public String getGroup() {
-        return group;
+    public List<WMXRow> getGroupedRows() {
+        return groupedRows;
+    }
+
+    public WMXRow withGroupedRow() {
+        final WMXRow newRow = this.parent.withRow();
+        this.groupedRows.add(newRow);
+        return newRow;
     }
 
     public WMXSheet and() {
