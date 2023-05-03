@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -333,7 +332,21 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell(null).and().withCell("Teste");
         sheet.withRow().withCell(null).and().withCell(null).subtotal().currency();
         sheet.withRow().withCell(null).and().withCell(null).currency();
+        sheet.withRow().withCell(Boolean.TRUE).and().withCell(null).and().withCell(null);
         spreadsheet.toFile("/tmp/planilha_auto_filter" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+    
+    @Test
+    @Disabled
+    public void testeEmptyCells() throws Exception {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        final WMXSheet sheet = spreadsheet.withSheet("Teste");
+        
+        sheet.withRow().withCell("Coluna 1")
+                .and().withCell()
+                .and().withCell("Coluna 3")
+                .and().withCells(2).withCell("Coluna 6");
+        spreadsheet.toFile("/tmp/planilha_empty_cells" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 
     @Test
