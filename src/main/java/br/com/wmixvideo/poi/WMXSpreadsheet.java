@@ -46,7 +46,7 @@ public class WMXSpreadsheet {
                 sheetCriado.getRow(rowCriada.getRowNum()).setZeroHeight(row.isHiddenRow());
                 for (WMXCell<?> cell : row.getCells()) {
                     if (cell.isHiddenColumn()) {
-                        columnsHidden.add(cell.getIndex()-1);
+                        columnsHidden.add(cell.getIndex() - 1);
                     }
                     buildGenerateCell(cell, posicaoCelula, rowCriada, sheetCriado, styles);
                     posicaoCelula = posicaoCelula + Math.max(cell.getMergedColumns() - 1, 0) + 1;
@@ -103,9 +103,15 @@ public class WMXSpreadsheet {
         if (!linhasAgrupadasAtual.isEmpty()) {
             agrupamentosTotais.add(linhasAgrupadasAtual);
         }
+
         for (List<Integer> agrupamento : agrupamentosTotais) {
-            sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size() - 1));
-            sheetCriado.setRowSumsBelow(false);
+            if (agrupamento.size() > 1) {
+                sheetCriado.groupRow(agrupamento.get(0) + 1, agrupamento.get(agrupamento.size() - 1));
+                sheetCriado.setRowSumsBelow(false);
+                if (sheet.isCollapseRowGroups()) {
+                    sheetCriado.setRowGroupCollapsed(agrupamento.get(0) + 1, true);
+                }
+            }
         }
     }
 
@@ -156,7 +162,7 @@ public class WMXSpreadsheet {
         }
 
 
-        if (cell.getWidth() != 0){
+        if (cell.getWidth() != 0) {
             cellCriada.getColumnIndex();
             sheet.setColumnWidth(cellCriada.getColumnIndex(), cell.getWidth() * 256);
         }
