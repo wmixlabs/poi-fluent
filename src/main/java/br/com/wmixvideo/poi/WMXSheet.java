@@ -11,6 +11,7 @@ public class WMXSheet {
     private int freezeCols, freezeRows;
     private boolean autoSizeColumns;
     private WMXCellRange autoFilterRange;
+    private boolean collapseRowGroups;
 
     public WMXSheet(final String name, final WMXSpreadsheet parent) {
         this.name = name;
@@ -72,5 +73,15 @@ public class WMXSheet {
 
     public WMXSpreadsheet and() {
         return parent;
+    }
+
+
+    public boolean isCollapseRowGroups() {
+        return collapseRowGroups;
+    }
+
+    public WMXSheet withCollapseRowGroups(boolean collapseRowGroups) {
+        this.collapseRowGroups = collapseRowGroups;
+        return this;
     }
 }

@@ -6,18 +6,17 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellReference;
 
 import java.awt.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class WMXCell<T> {
-
     private T value;
     private final WMXStyle style;
     private String formula, comment, link;
     private int mergedColumns, mergedRows;
     private boolean hiddenColumn;
     private final WMXRow parent;
+    private int width;
 
     public WMXCell(T value, WMXRow parent) {
         this.value = value;
@@ -30,6 +29,15 @@ public class WMXCell<T> {
         } else if(value instanceof  Integer){
             this.withDataFormat("#,##0");
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public WMXCell<T> withWidth(int width) {
+        this.width = width;
+        return this;
     }
 
     public WMXCell<T> withValue(final T value) {
