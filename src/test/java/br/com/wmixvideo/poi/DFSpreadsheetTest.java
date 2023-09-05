@@ -26,8 +26,8 @@ class DFSpreadsheetTest {
         final WMXRow row = sheet.withRow();
         row.withCell("Teste").title();
         row.withCell("O dia que a terra parou").bold();
-        row.withCell("Esse campo \u00E9 azul").withBackgroundColor(IndexedColors.BLUE);
-        row.withCell("Essa letra \u00E9 vermelha").withFontColor(IndexedColors.RED);
+        row.withCell("Esse campo é azul").withBackgroundColor(IndexedColors.BLUE);
+        row.withCell("Essa letra é vermelha").withFontColor(IndexedColors.RED);
         row.withCell("Font Alef").withFontFamily("alef");
         row.withCell("Font 20").withFontSize((short) 20);
         spreadsheet.toFile(WMXFormat.XLS, "/tmp/planilha_basica_" + LocalDateTime.now().format(FORMATTER) + ".xls");
@@ -88,7 +88,7 @@ class DFSpreadsheetTest {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
         final WMXRow dfRow = sheet.withRow();
-        dfRow.withCell("Este \u00E9 um texto longo");
+        dfRow.withCell("Este é um texto longo");
         dfRow.withCell("Texto");
         sheet.withRow().withCell("curto");
         sheet.withAutoSizeColumns(true);
@@ -319,7 +319,7 @@ class DFSpreadsheetTest {
     @Disabled
     public void testeFiltro() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
-        final WMXSheet sheet = spreadsheet.withSheet("Teste").withAutoFilter(0,0, 1, 3);
+        final WMXSheet sheet = spreadsheet.withSheet("Teste").withAutoFilter(0, 0, 1, 3);
 
         sheet.withRow().withCell("COLUNA A").subtitle()
                 .and().withCell("COLUNA B").subtitle()
@@ -335,13 +335,13 @@ class DFSpreadsheetTest {
         sheet.withRow().withCell(Boolean.TRUE).and().withCell(null).and().withCell(null);
         spreadsheet.toFile("/tmp/planilha_auto_filter" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
-    
+
     @Test
     @Disabled
     public void testeEmptyCells() throws Exception {
         final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
         final WMXSheet sheet = spreadsheet.withSheet("Teste");
-        
+
         sheet.withRow().withCell("Coluna 1")
                 .and().withCell()
                 .and().withCell("Coluna 3")
@@ -361,7 +361,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Especificacoes")
                 .withCell("Cls").withBackgroundColor(IndexedColors.GREY_25_PERCENT).and()
-                .withCell("Descri\u00E7\u00E3o").withBackgroundColor(IndexedColors.GREY_25_PERCENT).and()
+                .withCell("Descrição").withBackgroundColor(IndexedColors.GREY_25_PERCENT).and()
                 .withCell("Verba aprovada").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT).and()
                 .withCell("Verba distribuida").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT).and()
                 .withCell("Saldo").withBackgroundColor(IndexedColors.GREY_25_PERCENT).withHorizontalAligment(HorizontalAlignment.RIGHT).and()
@@ -372,7 +372,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 1")
                 .withCell("1").bold().and()
-                .withCell("Distribui\u00E7\u00E3o 9").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").bold().and()
+                .withCell("Distribuição 9").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").bold().and()
                 .withCell(BigDecimal.valueOf(163125.92)).bold().and()
                 .withCell(BigDecimal.valueOf(88276.25)).bold().and()
                 .withCell(BigDecimal.valueOf(61415.44)).bold().and()
@@ -389,17 +389,17 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 3")
                 .withCell("01.01.01").and()
-                .withCell("Alimenta\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Alimentação").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(2500.00)).withDataFormat("#,##0.00");
 
         sheet.withRow().withGroup("Item 4")
                 .withCell("01.01.02").and()
-                .withCell("Comunica\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Comunicação").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(500.00)).withDataFormat("#,##0.00");
 
         sheet.withRow().withGroup("Item 5")
                 .withCell("01.01.03").and()
-                .withCell("Equipe de lan\u00E7amento").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#");
+                .withCell("Equipe de lançamento").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#");
 
         sheet.withRow().withGroup("Item 6")
                 .withCell("01.01.04").and()
@@ -413,7 +413,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 8")
                 .withCell("01.02").and()
-                .withCell("C\u00F3pia 1").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Cópia 1").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(2490.00)).withDataFormat("#,##0.00").and()
                 .withCell(BigDecimal.valueOf(18.00)).withDataFormat("#,##0.00").and()
                 .withCell("").and()
@@ -477,7 +477,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 15")
                 .withCell("01.02.05").and()
-                .withCell("Produ\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Produção").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell("").and()
                 .withCell("").and()
                 .withCell("").and()
@@ -499,7 +499,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 17")
                 .withCell("01.03.01").and()
-                .withCell("Material Gr\u00E1fico 1").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Material Gráfico 1").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(10600.00)).withDataFormat("#,###.00").and()
                 .withCell("").and()
                 .withCell(BigDecimal.valueOf(675.00)).withDataFormat("#,###.00").and()
@@ -510,7 +510,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 18")
                 .withCell("01.03.02").and()
-                .withCell("M\u00EDdia 2").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Mídia 2").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(30000.00)).withDataFormat("#,###.00").and()
                 .withCell("").and()
                 .withCell(BigDecimal.valueOf(25000.00)).withDataFormat("#,###.00").and()
@@ -521,7 +521,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 19")
                 .withCell("01.03.03").and()
-                .withCell("Produ\u00E7\u00E3o Audiovisual").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Produção Audiovisual").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell("").and()
                 .withCell("").and()
                 .withCell(BigDecimal.valueOf(10000.00)).withDataFormat("#,###.00").and()
@@ -532,7 +532,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 20")
                 .withCell("01.04").and()
-                .withCell("A\u00E7\u00E3o Promocional 4").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Ação Promocional 4").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(70000.00)).withDataFormat("#,###.00").and()
                 .withCell(BigDecimal.valueOf(25800.00)).withDataFormat("#,###.00").and()
                 .withCell(BigDecimal.valueOf(10740.44)).and()
@@ -644,7 +644,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 30")
                 .withCell("01.07.01").and()
-                .withCell("Classifica\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Classificação").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(966.00)).withDataFormat("#,###.00").and()
                 .withCell("").and()
                 .withCell(BigDecimal.valueOf(15000.00)).withDataFormat("#,###.00").and()
@@ -655,7 +655,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 31")
                 .withCell("01.07.02").and()
-                .withCell("Fiscaliza\u00E7\u00E3o").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Fiscalização").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell(BigDecimal.valueOf(11960.00)).withDataFormat("#,###.00").and()
                 .withCell("").and()
                 .withCell("").and()
@@ -666,7 +666,7 @@ class DFSpreadsheetTest {
 
         sheet.withRow().withGroup("Item 32")
                 .withCell("01.07.03").and()
-                .withCell("Honor\u00E1rios").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
+                .withCell("Honorários").withLink("https://orcamento.wmixvideo.com.br/budget/1919/1/0#").and()
                 .withCell("").and()
                 .withCell("").and()
                 .withCell("").and()
@@ -756,5 +756,22 @@ class DFSpreadsheetTest {
         rowGrandTotal.withCell(BigDecimal.ZERO).currency().withFormula("SUM(109,E4:E12)").totalizer();
 
         spreadsheet.toFile("/tmp/planilha_diego_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
+    }
+
+
+    @Test
+    @Disabled
+    public void testMemoryUsage() throws Exception {
+        final WMXSpreadsheet spreadsheet = new WMXSpreadsheet();
+        for (int sheetNumber = 1; sheetNumber <= 10; sheetNumber++) {
+            final WMXSheet sheet = spreadsheet.withSheet("Sheet %s".formatted(sheetNumber));
+            for (int rowNumber = 1; rowNumber < 100000; rowNumber++) {
+                final WMXRow row = sheet.withRow();
+                for (int columnNumber = 1; columnNumber <= 50; columnNumber++) {
+                    row.withCell("R%s C%s".formatted(rowNumber, columnNumber));
+                }
+            }
+        }
+        spreadsheet.toFile("/tmp/memory_" + LocalDateTime.now().format(FORMATTER) + ".xlsx");
     }
 }

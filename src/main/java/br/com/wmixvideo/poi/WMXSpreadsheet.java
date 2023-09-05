@@ -5,6 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -34,7 +35,7 @@ public class WMXSpreadsheet {
     }
 
     private Workbook build(WMXFormat format) {
-        final Workbook woorkBook = WMXFormat.XLS.equals(format) ? new HSSFWorkbook() : new XSSFWorkbook();
+        final Workbook woorkBook = WMXFormat.XLS.equals(format) ? new HSSFWorkbook() : new SXSSFWorkbook();
         final Map<Integer, CellStyle> styles = buildGenerateStyles(woorkBook);
         for (WMXSheet sheet : this.sheets) {
             final Set<Integer> columnsHidden = new HashSet<>();
@@ -210,7 +211,7 @@ public class WMXSpreadsheet {
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
-            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof XSSFWorkbook) {
+            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof SXSSFWorkbook) {
                 ((XSSFCellStyle) cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
