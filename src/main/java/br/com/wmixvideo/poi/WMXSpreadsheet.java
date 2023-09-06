@@ -5,6 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -62,6 +63,9 @@ public class WMXSpreadsheet {
             buildGenerateGroupLines(sheet, sheetCriado);
 
             if (sheet.isAutoSizeColumns()) {
+                if(sheetCriado instanceof SXSSFSheet){
+                    ((SXSSFSheet) sheetCriado).trackAllColumnsForAutoSizing();
+                }
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
                     sheetCriado.autoSizeColumn(indiceColuna);
                 }
