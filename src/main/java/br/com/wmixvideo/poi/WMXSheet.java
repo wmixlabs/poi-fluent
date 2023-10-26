@@ -1,7 +1,12 @@
 package br.com.wmixvideo.poi;
 
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WMXSheet {
 
@@ -83,5 +88,19 @@ public class WMXSheet {
     public WMXSheet withCollapseRowGroups(boolean collapseRowGroups) {
         this.collapseRowGroups = collapseRowGroups;
         return this;
+    }
+
+    public boolean hasGroupedRows() {
+        final Map<String, Integer> groupCouters = new HashMap<>();
+        for (WMXRow row : getRows()) {
+            if (row.getGroup() != null && !row.getGroup().isBlank()) {
+                int groupCount = (groupCouters.getOrDefault(row.getGroup(), 0)) + 1;
+                if (groupCount > 1) {
+                    return true;
+                }
+                groupCouters.put(row.getGroup(), groupCount);
+            }
+        }
+        return false;
     }
 }

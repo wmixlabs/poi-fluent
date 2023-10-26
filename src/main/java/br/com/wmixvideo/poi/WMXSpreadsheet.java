@@ -41,6 +41,12 @@ public class WMXSpreadsheet {
         for (WMXSheet sheet : this.sheets) {
             final Set<Integer> columnsHidden = new HashSet<>();
             final Sheet sheetCriado = woorkBook.createSheet(sheet.getName());
+
+            //caso existam linhas agrupadas eu realizo tratamento para manter dados em memoria
+            if (sheetCriado instanceof SXSSFSheet && sheet.hasGroupedRows()) {
+                ((SXSSFSheet) sheetCriado).setRandomAccessWindowSize(-1);
+            }
+
             for (WMXRow row : sheet.getRows()) {
                 final Row rowCriada = sheetCriado.createRow(Math.max(sheetCriado.getLastRowNum() + 1, 0));
                 int posicaoCelula = 0;
@@ -62,10 +68,13 @@ public class WMXSpreadsheet {
             //Processa agrupamento de linhas
             buildGenerateGroupLines(sheet, sheetCriado);
 
-            if (sheet.isAutoSizeColumns()) {
-                if(sheetCriado instanceof SXSSFSheet){
+
+            boolean isAutosizeValid = !(sheetCriado instanceof SXSSFSheet) || !hasFormulaCell(sheetCriado);
+            if (sheet.isAutoSizeColumns() && isAutosizeValid) {
+                if (sheetCriado instanceof SXSSFSheet) {
                     ((SXSSFSheet) sheetCriado).trackAllColumnsForAutoSizing();
                 }
+
                 for (int indiceColuna = 0; indiceColuna <= sheetCriado.getLastRowNum(); indiceColuna++) {
                     sheetCriado.autoSizeColumn(indiceColuna);
                 }
@@ -77,6 +86,19 @@ public class WMXSpreadsheet {
             }
         }
         return woorkBook;
+    }
+
+    private static boolean hasFormulaCell(Sheet sheetCriado) {
+        for (int rowIndex = 0; rowIndex <= sheetCriado.getLastRowNum(); rowIndex++) {
+            final Row row = sheetCriado.getRow(rowIndex);
+            for (int cellIndex = 0; cellIndex <= row.getLastCellNum(); cellIndex++) {
+                final boolean isFormulaType = Optional.ofNullable(row.getCell(cellIndex)).map(c -> CellType.FORMULA.equals(c.getCellType())).orElse(false);
+                if (isFormulaType) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void buildGenerateGroupLines(final WMXSheet sheet, final Sheet sheetCriado) {
@@ -215,8 +237,13 @@ public class WMXSpreadsheet {
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
-            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof SXSSFWorkbook) {
+            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof XSSFWorkbook) {
                 ((XSSFCellStyle) cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((XSSFWorkbook) woorkBook).getStylesSource().getIndexedColors()));
+                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            }
+
+            if (dfStyle.getCustomBackgroundColor() != null && woorkBook instanceof SXSSFWorkbook) {
+                ((XSSFCellStyle) cellStyle).setFillForegroundColor(new XSSFColor(dfStyle.getCustomBackgroundColor(), ((SXSSFWorkbook)woorkBook).getXSSFWorkbook().getStylesSource().getIndexedColors()));
                 cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             }
 
