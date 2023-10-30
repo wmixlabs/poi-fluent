@@ -91,10 +91,12 @@ public class WMXSpreadsheet {
     private static boolean hasFormulaCell(Sheet sheetCriado) {
         for (int rowIndex = 0; rowIndex <= sheetCriado.getLastRowNum(); rowIndex++) {
             final Row row = sheetCriado.getRow(rowIndex);
-            for (int cellIndex = 0; cellIndex <= row.getLastCellNum(); cellIndex++) {
-                final boolean isFormulaType = Optional.ofNullable(row.getCell(cellIndex)).map(c -> CellType.FORMULA.equals(c.getCellType())).orElse(false);
-                if (isFormulaType) {
-                    return true;
+            if(row != null) {
+                for (int cellIndex = 0; cellIndex <= row.getLastCellNum(); cellIndex++) {
+                    final boolean isFormulaType = Optional.ofNullable(row.getCell(cellIndex)).map(c -> CellType.FORMULA.equals(c.getCellType())).orElse(false);
+                    if (isFormulaType) {
+                        return true;
+                    }
                 }
             }
         }
